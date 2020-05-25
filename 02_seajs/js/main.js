@@ -3,22 +3,23 @@
     
 }); */
 define(function (require, exports, module) {
-  var circle = require('./circle.js');
-  var square = require('./square.js');
-  //   alert(circle.mianji(10));
-  //   alert(circle.zhouchang(10));
+  const circle = require('./circle.js');
+  const zhouchang = require('./square.js');
+  const People = require('./People.js');
 
-  //   alert(square.mianji(10));
-  //   alert(square.zhouchang(10));
+  console.log(circle.mianji(10));
+  console.log(circle.zhouchang(10));
 
-  const kuang = document.getElementById('kuang');
+  console.log(zhouchang.mianji(10));
+  console.log(zhouchang.zhouchang(10));
+
   const btn = document.getElementById('btn');
+  const kuang = document.getElementById('kuang');
   const h1 = document.getElementById('h1');
   btn.onclick = function () {
     h1.innerHTML = '圆的面积为' + circle.mianji(kuang.value);
   };
-  var People = require('./People');
   // 实例化一个人类
-  var xiaoming = new People('小杉', 18, '女');
+  const xiaoming = new People('小杉', 18, '女');
   xiaoming.sayHello();
 });

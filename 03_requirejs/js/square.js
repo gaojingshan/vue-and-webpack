@@ -1,7 +1,10 @@
 define([], function () {
   return {
-    mianji(r) {
-      return r * r+1;
+    mianji(a) {
+      return a * a;
+    },
+    zhouchang(a) {
+      return 4 * a;
     },
   };
 });

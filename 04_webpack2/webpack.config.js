@@ -4,7 +4,7 @@ module.exports = {
   mode: 'development',
   // 入口
   entry: './app/main.js',
-  //   出口
+  // 出口
   output: {
     filename: 'bundle.js',
     path: __dirname + '/dist',

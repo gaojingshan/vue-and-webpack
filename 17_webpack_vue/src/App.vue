@@ -1,40 +1,38 @@
 <template>
     <div>
-        <A :star="star" :idx="idx" @changeStar="changeStarHan" />
-        <B :star="star" :idx="idx" @goPrev="goPrevHan" @goNext="goNextHan" />
-        <C :star="star" :idx="idx" @changeIdx="changeIdxHan" />
+        <Hd :arr="arr"/>
+        <Bd :arr="arr"/>
+        <Ft :arr="arr"/>
+        {{arr}}
     </div>
 </template>
 
 <script>
-    import A from './components/A.vue';
-    import B from './components/B.vue';
-    import C from './components/C.vue';
+    import Hd from './components/Hd.vue';
+    import Bd from './components/Bd.vue';
+    import Ft from './components/Ft.vue';
     export default {
         data() {
             return {
-                star: 'yangmi',
-                idx: 1
+                arr: [{
+                        'title': '吃饭',
+                        'done': false
+                    },
+                    {
+                        'title': '睡觉',
+                        'done': true
+                    },
+                    {
+                        'title': '打豆豆',
+                        'done': false
+                    },
+                ]
             }
         },
         components: {
-            A,
-            B,
-            C
-        },
-        methods: {
-            goPrevHan() {
-                this.idx--
-            },
-            goNextHan() {
-                this.idx++
-            },
-            changeIdxHan({idx}){
-                this.idx = idx
-            },
-            changeStarHan({star}){
-                this.star = star
-            }
+            Hd,
+            Bd,
+            Ft
         }
     }
 </script>

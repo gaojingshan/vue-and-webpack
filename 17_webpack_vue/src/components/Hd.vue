@@ -18,8 +18,8 @@
                 this.arr.push({
                     'title': this.title,
                     'done': false
-                }),
-                this.title=''
+                })
+                this.title = ''
             }
         }
     }

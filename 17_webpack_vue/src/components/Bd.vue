@@ -1,7 +1,7 @@
 <template>
     <div>
         <ul>
-            <li v-for="(item,index) in arr" :key="index">
+            <li v-for="(item, index) in arr" :key="index">
                 <div class="box">
                     <input type="checkbox" v-model="item.done">
                 </div>

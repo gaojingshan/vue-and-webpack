@@ -17,7 +17,7 @@ module.exports = {
   // devServer的publicPath是用来本地服务拦截带publicPath开头的请求的
   devServer: {
     // 端口号
-    port: 8080,
+    port: 9000,
     // 静态文件的目录，www文件夹是静态资源文件。contentBase是用来指定被访问html页面所在目录的。
     contentBase: './www',
   },

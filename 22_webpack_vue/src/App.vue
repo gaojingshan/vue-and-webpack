@@ -1,19 +1,19 @@
 <template>
     <div class="wrap">
         <!-- <Row>
-                <i-col span="6">
-                    <h1>你好</h1>
-                </i-col>
-                <i-col span="6">
-                    <h1>你好</h1>
-                </i-col>
-                <i-col span="6">
-                    <h1>你好</h1>
-                </i-col>
-                <i-col span="6">
-                    <h1>你好</h1>
-                </i-col>
-            </Row> -->
+                    <i-col span="6">
+                        <h1>你好</h1>
+                    </i-col>
+                    <i-col span="6">
+                        <h1>你好</h1>
+                    </i-col>
+                    <i-col span="6">
+                        <h1>你好</h1>
+                    </i-col>
+                    <i-col span="6">
+                        <h1>你好</h1>
+                    </i-col>
+                </Row> -->
         <Row :gutter="16">
             <i-col :span="6" v-for="(item, index) in arr" :key="index">
                 <Card>
@@ -46,10 +46,12 @@
                             请选择省市县镇
                             <Icon type="ios-arrow-down"></Icon>
                         </a>
-                    <DropdownMenu slot="list">
-                        <p>哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈</p>
+                    <DropdownMenu slot="list" style="width: 400px;height: 200px">
+                        <div class="dropdowninnerbox">
+                            <DropDownInn />
+                        </div>
                         <div style="text-align: right;margin:10px;">
-                            <Button type="primary" @click="isShowDropDown = false">确定</Button>
+                            <Button type="primary" @click="isShowDropDown = false">取消</Button>
                         </div>
                     </DropdownMenu>
                 </Dropdown>
@@ -60,6 +62,7 @@
 
 <script>
     import axios from 'axios';
+    import DropDownInn from './components/DropDownInn.vue';
     export default {
         data() {
             return {
@@ -69,6 +72,9 @@
                 // 是否显示出菜单
                 isShowDropDown: true
             }
+        },
+        components: {
+            DropDownInn
         },
         created() {
             // 请求服务器数据
@@ -95,5 +101,8 @@
                 }
             }
         }
+    }
+    .dropdowninnerbox {
+        height: 150px;
     }
 </style>

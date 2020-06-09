@@ -1,10 +1,22 @@
 <template>
     <div class="ddinn">
         <div class="hd">
-            <span v-if="p != ''" :class="{'cur' : nowShow == 'p'}">{{p}}</span>
-            <span v-if="c != ''" :class="{'cur' : nowShow == 'c'}">{{c}}</span>
-            <span v-if="a != ''" :class="{'cur' : nowShow == 'a'}">{{a}}</span>
-            <span v-if="s != ''" :class="{'cur' : nowShow == 's'}">{{s}}</span>
+            <span :class="{'cur' : nowShow == 'p'}" @click="hd_han('p')">
+                <em v-if="p != ''">{{p}}</em>
+                <em v-else>请选择省份（直辖市）</em>
+            </span>
+            <span v-if="p != ''" :class="{'cur' : nowShow == 'c'}" @click="hd_han('c')">
+                <em v-if="c != ''">{{c}}</em>
+                <em v-else>请选择城市</em>
+            </span>
+            <span v-if="c != ''" :class="{'cur' : nowShow == 'a'}" @click="hd_han('a')">
+                <em v-if="a != ''">{{a}}</em>
+                <em v-else>请选择县（区）</em>
+            </span>
+            <span v-if="a != ''" :class="{'cur' : nowShow == 's'}" @click="hd_han('s')">
+                <em v-if="s != ''">{{s}}</em>
+                <em v-else>请选择镇（街道）</em>
+            </span>
         </div>
         <!-- {{Object.keys(pcasobj)}} -->
         <p v-if="nowShow == 'p'">
@@ -60,20 +72,37 @@
             shengHan(p) {
                 // 让p属性改变为用户点击的p
                 this.p = p;
+                // 选了省，那么市、县、区就要清空
+                this.c = '';
+                this.a = '';
+                this.s = '';
                 // 改变nowShow为c
                 this.nowShow = 'c';
             },
             shiHan(c) {
                 this.c = c;
+                this.a = '';
+                this.s = '';
                 this.nowShow = 'a'
             },
             xianHan(a) {
                 this.a = a;
+                this.s = '';
                 this.nowShow = 's'
             },
             zhenHan(s) {
                 this.s = s;
-                this.nowShow = 's'
+                // 通知父组件
+                this.$emit('zhenHan', {
+                    p: this.p,
+                    c: this.c,
+                    a: this.a,
+                    s: this.s,
+                })
+            },
+            // 点击头部的时候
+            hd_han(n) {
+                this.nowShow = n
             }
         }
     }
@@ -84,17 +113,24 @@
         padding: 5px;
         .hd {
             height: 20px;
-            border-bottom: 1px solid #ccc;
+            border-bottom: 1px solid #eee;
             margin-bottom: 10px;
             span {
                 float: left;
-                padding: 0 10px;
-                border: 1px solid #ccc;
+                padding: 0 9px;
+                border: 1px solid #eee;
+                border-right: none;
                 border-bottom: none;
                 font-size: 12px;
                 cursor: pointer;
-                &.cur{
-                    background-color: gold;
+                &.cur {
+                    background-color: rgb(250, 235, 151);
+                }
+                em {
+                    font-style: normal;
+                }
+                &:last-child{
+                    border-right: 1px solid #eee;
                 }
             }
         }

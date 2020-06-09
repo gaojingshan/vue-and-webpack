@@ -1,19 +1,19 @@
 <template>
     <div class="wrap">
         <!-- <Row>
-                    <i-col span="6">
-                        <h1>你好</h1>
-                    </i-col>
-                    <i-col span="6">
-                        <h1>你好</h1>
-                    </i-col>
-                    <i-col span="6">
-                        <h1>你好</h1>
-                    </i-col>
-                    <i-col span="6">
-                        <h1>你好</h1>
-                    </i-col>
-                </Row> -->
+                            <i-col span="6">
+                                <h1>你好</h1>
+                            </i-col>
+                            <i-col span="6">
+                                <h1>你好</h1>
+                            </i-col>
+                            <i-col span="6">
+                                <h1>你好</h1>
+                            </i-col>
+                            <i-col span="6">
+                                <h1>你好</h1>
+                            </i-col>
+                        </Row> -->
         <Row :gutter="16">
             <i-col :span="6" v-for="(item, index) in arr" :key="index">
                 <Card>
@@ -38,50 +38,34 @@
             </i-col>
         </Row>
         <!-- 模态框 -->
-        <Modal v-model="isShowModal" width="500" title="增加收获地址">
-            <p>
-                <b>请选择省市县镇</b>
-                <Dropdown trigger="custom" placement="bottom-start" :visible="isShowDropDown" style="margin-left: 20px">
-                    <a href="javascript:void(0)" @click="isShowDropDown = true">
-                            请选择省市县镇
-                            <Icon type="ios-arrow-down"></Icon>
-                        </a>
-                    <DropdownMenu slot="list" style="width: 400px;height: 200px">
-                        <div class="dropdowninnerbox">
-                            <DropDownInn />
-                        </div>
-                        <div style="text-align: right;margin:10px;">
-                            <Button type="primary" @click="isShowDropDown = false">取消</Button>
-                        </div>
-                    </DropdownMenu>
-                </Dropdown>
-            </p>
+        <Modal v-model="isShowModal" width="600" title="增加收获地址">
+            <ModalInn />
         </Modal>
     </div>
 </template>
 
 <script>
     import axios from 'axios';
-    import DropDownInn from './components/DropDownInn.vue';
+    import ModalInn from './components/ModalInn.vue'
+    
     export default {
         data() {
             return {
                 arr: [],
                 // 是否显示弹出层
                 isShowModal: true,
-                // 是否显示出菜单
-                isShowDropDown: true
             }
         },
         components: {
-            DropDownInn
+            ModalInn
         },
         created() {
             // 请求服务器数据
             axios.get('http://www.aiqianduan.com:56506/shdz/shanshan').then(data => {
                 this.arr = data.data
             })
-        }
+        },
+        
     }
 </script>
 
@@ -105,4 +89,5 @@
     .dropdowninnerbox {
         height: 150px;
     }
+    
 </style>

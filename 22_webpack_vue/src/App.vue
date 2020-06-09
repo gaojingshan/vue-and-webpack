@@ -1,19 +1,19 @@
 <template>
     <div class="wrap">
         <!-- <Row>
-                                <i-col span="6">
-                                    <h1>你好</h1>
-                                </i-col>
-                                <i-col span="6">
-                                    <h1>你好</h1>
-                                </i-col>
-                                <i-col span="6">
-                                    <h1>你好</h1>
-                                </i-col>
-                                <i-col span="6">
-                                    <h1>你好</h1>
-                                </i-col>
-                            </Row> -->
+                                    <i-col span="6">
+                                        <h1>你好</h1>
+                                    </i-col>
+                                    <i-col span="6">
+                                        <h1>你好</h1>
+                                    </i-col>
+                                    <i-col span="6">
+                                        <h1>你好</h1>
+                                    </i-col>
+                                    <i-col span="6">
+                                        <h1>你好</h1>
+                                    </i-col>
+                                </Row> -->
         <Row :gutter="16">
             <i-col :span="6" v-for="(item, index) in arr" :key="index">
                 <Card>
@@ -38,7 +38,7 @@
             </i-col>
         </Row>
         <!-- 模态框 -->
-        <Modal v-model="isShowModal" width="600" title="增加收获地址" @on-ok="okHan">
+        <Modal :value="isShowModal" :loading="true" width="600" title="增加收获地址" @on-ok="okHan">
             <ModalInn ref="modalinn" />
         </Modal>
     </div>
@@ -79,9 +79,10 @@
                     a,
                     s
                 } = this.$refs.modalinn;
-                
                 // 检验整个表格  validate 验证的意思
-                if(this.$refs.modalinn.$refs.myform.validate())
+                if (this.$refs.modalinn.$refs.myform.validate()){
+                    
+                }
             }
         }
     }

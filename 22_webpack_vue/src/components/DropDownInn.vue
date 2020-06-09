@@ -112,7 +112,7 @@
     .ddinn {
         padding: 5px;
         .hd {
-            height: 20px;
+            overflow: hidden;
             border-bottom: 1px solid #eee;
             margin-bottom: 10px;
             span {
@@ -124,7 +124,9 @@
                 font-size: 12px;
                 cursor: pointer;
                 &.cur {
-                    background-color: rgb(250, 235, 151);
+                    // background-color: rgb(250, 235, 151);
+                    border-bottom: 2px solid red;
+                    color: red;
                 }
                 em {
                     font-style: normal;

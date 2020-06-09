@@ -1,19 +1,19 @@
 <template>
     <div class="wrap">
         <!-- <Row>
-                            <i-col span="6">
-                                <h1>你好</h1>
-                            </i-col>
-                            <i-col span="6">
-                                <h1>你好</h1>
-                            </i-col>
-                            <i-col span="6">
-                                <h1>你好</h1>
-                            </i-col>
-                            <i-col span="6">
-                                <h1>你好</h1>
-                            </i-col>
-                        </Row> -->
+                                <i-col span="6">
+                                    <h1>你好</h1>
+                                </i-col>
+                                <i-col span="6">
+                                    <h1>你好</h1>
+                                </i-col>
+                                <i-col span="6">
+                                    <h1>你好</h1>
+                                </i-col>
+                                <i-col span="6">
+                                    <h1>你好</h1>
+                                </i-col>
+                            </Row> -->
         <Row :gutter="16">
             <i-col :span="6" v-for="(item, index) in arr" :key="index">
                 <Card>
@@ -38,8 +38,8 @@
             </i-col>
         </Row>
         <!-- 模态框 -->
-        <Modal v-model="isShowModal" width="600" title="增加收获地址">
-            <ModalInn />
+        <Modal v-model="isShowModal" width="600" title="增加收获地址" @on-ok="okHan">
+            <ModalInn ref="modalinn" />
         </Modal>
     </div>
 </template>
@@ -47,7 +47,6 @@
 <script>
     import axios from 'axios';
     import ModalInn from './components/ModalInn.vue'
-    
     export default {
         data() {
             return {
@@ -65,7 +64,26 @@
                 this.arr = data.data
             })
         },
-        
+        methods: {
+            // 当点击模态框的确定按钮做的事情
+            okHan() {
+                const {
+                    n,
+                    tel,
+                    alias,
+                    d
+                } = this.$refs.modalinn.myform;
+                const {
+                    p,
+                    c,
+                    a,
+                    s
+                } = this.$refs.modalinn;
+                
+                // 检验整个表格  validate 验证的意思
+                if(this.$refs.modalinn.$refs.myform.validate())
+            }
+        }
     }
 </script>
 
@@ -89,5 +107,4 @@
     .dropdowninnerbox {
         height: 150px;
     }
-    
 </style>

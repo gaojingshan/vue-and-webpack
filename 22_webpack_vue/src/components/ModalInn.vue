@@ -26,6 +26,20 @@
                 <i-input v-model="myform.tel" placeholder="请输入合法的手机号码">
                 </i-input>
             </FormItem>
+            <FormItem label="收件人" prop="n">
+                <i-input v-model="myform.n" placeholder="请输入收件人姓名（可以用昵称）">
+                </i-input>
+            </FormItem>
+            <FormItem label="地址别名" prop="alias">
+                <Row>
+                    <i-col :span="6">
+                        <i-input v-model="myform.alias" placeholder=""></i-input>
+                    </i-col>
+                    <i-col :span="18">
+                        <Button class="btn" v-for="(item, index) in ['家','公司','学校']" :key="index" @click="aliasBtnHan(item)">{{item}}</Button>
+                    </i-col>
+                </Row>
+            </FormItem>
         </Form>
     </div>
 </template>
@@ -45,17 +59,28 @@
                 c: '',
                 a: '',
                 s: '',
-                d:'',
                 // 校验规则
                 ruleValidate: {
                     // 省市县镇的规则
                     pcas: [{
                         required: true
                     }],
-                    // 省市县镇的规则
-                    d: [{
-                        required: true
-                    }],
+                    // 详细地址的规则
+                    d: [
+                        // 必填
+                        {
+                            required: true,
+                            message: '必须填写详细地址',
+                            trigger: 'blur'
+                        },
+                        // 字数校验
+                        {
+                            min: 10,
+                            max: 30,
+                            message: '字数在10到30字之间',
+                            trigger: 'blur'
+                        }
+                    ],
                     // 电话号码的校验规则
                     tel: [
                         // 必填的校验
@@ -71,11 +96,32 @@
                             trigger: 'blur'
                         }
                     ],
+                    // 收件人姓名的规则
+                    n: [
+                        // 必填
+                        {
+                            required: true,
+                            message: '必须填写收件人姓名',
+                            trigger: 'blur'
+                        }
+                    ],
+                    // 地址别名的规则
+                    alias: [
+                        // 必填
+                        {
+                            required: true,
+                            message: '必须填写地址别名',
+                            trigger: 'blur'
+                        }
+                    ],
                 },
                 // 表单的双向绑定
                 myform: {
-                    tel: ''
-                }
+                    tel: '',
+                    d: '',
+                    n: '',
+                    alias: '',
+                },
             }
         },
         methods: {
@@ -86,6 +132,11 @@
                 this.a = obj.a;
                 this.s = obj.s;
                 this.isShowDropDown = false;
+            },
+            // 点击地址别名的常用按钮，做的事情
+            aliasBtnHan(thing) {
+                // 双向绑定了已经
+                this.$set(this.myform, 'alias', thing)
             }
         }
     }
@@ -94,5 +145,8 @@
 <style lang="less" scoped>
     em {
         font-style: normal;
+    }
+    .btn {
+        margin-left: 6px;
     }
 </style>

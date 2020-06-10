@@ -1,19 +1,19 @@
 <template>
     <div class="wrap">
         <!-- <Row>
-                                    <i-col span="6">
-                                        <h1>你好</h1>
-                                    </i-col>
-                                    <i-col span="6">
-                                        <h1>你好</h1>
-                                    </i-col>
-                                    <i-col span="6">
-                                        <h1>你好</h1>
-                                    </i-col>
-                                    <i-col span="6">
-                                        <h1>你好</h1>
-                                    </i-col>
-                                </Row> -->
+                                                            <i-col span="6">
+                                                                <h1>你好</h1>
+                                                            </i-col>
+                                                            <i-col span="6">
+                                                                <h1>你好</h1>
+                                                            </i-col>
+                                                            <i-col span="6">
+                                                                <h1>你好</h1>
+                                                            </i-col>
+                                                            <i-col span="6">
+                                                                <h1>你好</h1>
+                                                            </i-col>
+                                                        </Row> -->
         <Row :gutter="16">
             <i-col :span="6" v-for="(item, index) in arr" :key="index">
                 <Card>
@@ -38,8 +38,12 @@
             </i-col>
         </Row>
         <!-- 模态框 -->
-        <Modal :value="isShowModal" :loading="true" width="600" title="增加收获地址" @on-ok="okHan">
-            <ModalInn ref="modalinn" />
+        <Modal :value="isShowModal" :loading="true" width="600" title="增加收获地址">
+            <ModalInn ref="modalinn" @updated="loading = false" />
+            <div slot="footer">
+                <Button>取消</Button>
+                <Button type="primary" @click="okHan">确定</Button>
+            </div>
         </Modal>
     </div>
 </template>
@@ -67,22 +71,41 @@
         methods: {
             // 当点击模态框的确定按钮做的事情
             okHan() {
-                const {
-                    n,
-                    tel,
-                    alias,
-                    d
-                } = this.$refs.modalinn.myform;
-                const {
-                    p,
-                    c,
-                    a,
-                    s
-                } = this.$refs.modalinn;
                 // 检验整个表格  validate 验证的意思
-                if (this.$refs.modalinn.$refs.myform.validate()){
-                    
-                }
+                // 这里回调的data值，就是表单是否无错，true表示无错，false表示有错
+                this.$refs.modalinn.$refs.myform.validate((data) => {
+                    if (data) {
+                        // 如果没有错误，提炼数据、关闭模态框、上传
+                        const {
+                            n,
+                            tel,
+                            alias,
+                            d
+                        } = this.$refs.modalinn.myform;
+                        const {
+                            p,
+                            c,
+                            a,
+                            s
+                        } = this.$refs.modalinn;
+                        this.isShowModal = false;
+                        
+                        // 添加数据
+                        axios.post('http://www.aiqianduan.com:56506/shdz/shanshan', {
+                            // k-v一致，省略v
+                            p,
+                            c,
+                            a,
+                            s,
+                            d,
+                            n,
+                            alias,
+                            tel
+                        }).then(data => {
+                            alert(data.data)
+                        })
+                    }
+                });
             }
         }
     }

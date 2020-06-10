@@ -63,7 +63,9 @@
                 ruleValidate: {
                     // 省市县镇的规则
                     pcas: [{
-                        required: true
+                        required: true,
+                        message: '必须选择省市县镇',
+                        trigger: 'blur'
                     }],
                     // 详细地址的规则
                     d: [
@@ -121,10 +123,13 @@
                     d: '',
                     n: '',
                     alias: '',
+                    // 省市县镇
+                    pcas: ''
                 },
             }
         },
         methods: {
+            // 当选完镇了之后
             zhenHan(obj) {
                 // console.log(obj);
                 this.p = obj.p;
@@ -132,6 +137,8 @@
                 this.a = obj.a;
                 this.s = obj.s;
                 this.isShowDropDown = false;
+                // 更改pcas属性
+                this.$set(this.myform, 'pcas', this.p + this.c + this.a + this.s)
             },
             // 点击地址别名的常用按钮，做的事情
             aliasBtnHan(thing) {

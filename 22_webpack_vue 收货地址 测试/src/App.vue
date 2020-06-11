@@ -15,28 +15,16 @@
                     </div>
                 </Card>
             </i-col>
-            <i-col span="6">
+            <i-col span="6" v-if="obj.length != 4">
                 <Card class="card">
                     <span>+</span>
                 </Card>
             </i-col>
         </Row>
         <!-- 模态框 -->
-        <Modal v-model="isShowModal" title="增加收货地址" @on-ok="ok" @on-cancel="cancel">
+        <Modal v-model="isShowModal" title="增加收货地址">
             <ModalInn />
-            <p>请选择省市县镇</p>
-            <Dropdown trigger="custom" :visible="isShowDropdown" style="margin-left: 20px">
-                <a href="javascript:void(0)" @click="isShowDropdown = true">
-                    custom 触发
-                    <Icon type="ios-arrow-down"></Icon>
-                </a>
-                <DropdownMenu slot="list">
-                    <p>常用于各种自定义下拉内容的场景。</p>
-                    <div style="text-align: right;margin:10px;">
-                        <Button type="primary" @click="isShowDropdown = false">关闭</Button>
-                    </div>
-                </DropdownMenu>
-            </Dropdown>
+            
         </Modal>
     </div>
 </template>
@@ -50,17 +38,16 @@
                 obj: {},
                 // 是否显示模态框
                 isShowModal: true,
-                // 是否显示下菜单
-                isShowDropdown: true
+                
             }
         },
         created() {
             axios.get('http://www.aiqianduan.com:56506/shdz/shanshanbeautiful').then(data => {
-                console.log(data.data);
+                // console.log(data.data);
                 this.obj = data.data;
             })
         },
-        components(){
+        components:{
             ModalInn
         }
     }

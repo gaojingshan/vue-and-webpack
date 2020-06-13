@@ -62,16 +62,22 @@
             // 点击省
             pHan(p) {
                 this.p = p;
+                this.c = '';
+                this.a = '';
+                this.s = '';
                 this.isShow = 'c';
             },
             // 点击市
             cHan(c) {
                 this.c = c;
+                this.a = '';
+                this.s = '';
                 this.isShow = 'a';
             },
             // 点击县
             aHan(a) {
                 this.a = a;
+                this.s = '';
                 this.isShow = 's';
             },
             // 点击镇

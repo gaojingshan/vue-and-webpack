@@ -1,7 +1,7 @@
 <template>
     <div class="wrap">
         <Row :gutter="16">
-            <i-col span="6" v-for="(item,index) in obj" :key="index">
+            <i-col span="6" v-for="(item,index) in arr" :key="index">
                 <Card>
                     <div slot="title"><b>{{item.alias}}</b></div>
                     <div slot="extra">
@@ -15,15 +15,15 @@
                     </div>
                 </Card>
             </i-col>
-            <i-col span="6" v-if="obj.length != 4">
-                <Card class="card" >
+            <i-col span="6" v-if="arr.length != 4">
+                <Card class="card">
                     <span @click="isShowModal = true">+</span>
                 </Card>
             </i-col>
         </Row>
         <!-- 模态框 -->
         <Modal :value="isShowModal" :loading="true" title="增加收货地址">
-            <ModalInn />
+            <ModalInn ref="modalinn" @updated="loading=false" />
             <div slot="footer">
                 <Button>取消</Button>
                 <Button type="primary" @click="onOk">确定</Button>
@@ -38,25 +38,52 @@
     export default {
         data() {
             return {
-                obj: {},
+                arr: [],
                 // 是否显示模态框
                 isShowModal: true,
-                
             }
         },
         created() {
             axios.get('http://www.aiqianduan.com:56506/shdz/shanshanbeautiful').then(data => {
                 // console.log(data.data);
-                this.obj = data.data;
+                this.arr = data.data;
             })
         },
-        components:{
+        components: {
             ModalInn
         },
-        methods:{
-            onOk(){
-                console.log(1);
-                
+        methods: {
+            onOk() {
+                this.$refs.modalinn.$refs.formValidate.validate(data => {
+                    if (data) {
+                        const {
+                            n,
+                            tel,
+                            alias,
+                            d
+                        } = this.$refs.modalinn.formValidate;
+                        const {
+                            p,
+                            c,
+                            a,
+                            s
+                        } = this.$refs.modalinn;
+                        this.isShowModal = false;
+
+                        axios.post('http://www.aiqianduan.com:56506/shdz/shanshanbeautiful',{
+                            p,
+                            c,
+                            a,
+                            s,
+                            d,
+                            n,
+                            alias,
+                            tel
+                        }).then(data=>{
+                            alert(data.data)
+                        })
+                    }
+                })
             }
         }
     }

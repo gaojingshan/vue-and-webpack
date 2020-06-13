@@ -1,7 +1,5 @@
 <template>
     <div>
-        <div style="overflow:hidden">
-        </div>
         <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="130">
             <FormItem label="请选择省市县镇" prop="pcas">
                 <!-- <i-input v-model="formValidate.pcas" placeholder="街道/小区/单元门洞/门牌号"></i-input> -->
@@ -34,8 +32,8 @@
                         <i-input v-model="formValidate.alias"></i-input>
                     </i-col>
                     <!-- <i-col span="6">
-                 </i-col> -->
-                    <span style="padding:0 10px;margin-left:10px;border:1px solid #ccc;display:block;float:left;text-align:center;border-radius:2px;cursor:pointer" v-for="(item, index) in arr" :key="index" @click="formValidate.alias = item">{{item}}</span>
+                     </i-col> -->
+                    <span style="padding:0 10px;margin-left:10px;border:1px solid #ccc;display:block;float:left;text-align:center;border-radius:2px;cursor:pointer" v-for="(item, index) in arr" :key="index" @click="aliasBtnHan(item)">{{item}}</span>
                 </Row>
             </FormItem>
         </Form>
@@ -116,7 +114,11 @@
                 this.a = thing.a;
                 this.s = thing.s;
                 // 下拉菜单关闭
-                this.isShowDropdown = false
+                this.isShowDropdown = false,
+                this.$set(this.formValidate, 'pcas', this.p + this.c + this.a + this.s)
+            },
+            aliasBtnHan(thing) {
+                this.$set(this.formValidate, 'alias', thing)
             }
         }
     }

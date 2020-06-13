@@ -38,7 +38,7 @@
             </i-col>
         </Row>
         <!-- 模态框 -->
-        <Modal :value="isShowModal" :loading="true" width="600" title="增加收获地址">
+        <Modal :value="isShowModal" :loading="true" width="600" title="增加收货地址">
             <ModalInn ref="modalinn" @updated="loading = false" />
             <div slot="footer">
                 <Button>取消</Button>

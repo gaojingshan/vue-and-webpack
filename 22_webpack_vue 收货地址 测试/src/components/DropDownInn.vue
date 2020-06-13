@@ -77,6 +77,12 @@
             // 点击镇
             sHan(s) {
                 this.s = s;
+                this.$emit('sHan', {
+                    p: this.p,
+                    c: this.c,
+                    a: this.a,
+                    s: this.s
+                })
             },
             // 点击导航
             hd_Han(show) {
@@ -92,7 +98,8 @@
         .hd {
             overflow: hidden;
             border-bottom: 1px solid #eee;
-            height: 28px;
+            height: 22px;
+            line-height: 8px;
         }
         .hd p {
             float: left;

@@ -16,15 +16,18 @@
                 </Card>
             </i-col>
             <i-col span="6" v-if="obj.length != 4">
-                <Card class="card">
-                    <span>+</span>
+                <Card class="card" >
+                    <span @click="isShowModal = true">+</span>
                 </Card>
             </i-col>
         </Row>
         <!-- 模态框 -->
-        <Modal v-model="isShowModal" title="增加收货地址">
+        <Modal :value="isShowModal" :loading="true" title="增加收货地址">
             <ModalInn />
-            
+            <div slot="footer">
+                <Button>取消</Button>
+                <Button type="primary" @click="onOk">确定</Button>
+            </div>
         </Modal>
     </div>
 </template>
@@ -49,6 +52,12 @@
         },
         components:{
             ModalInn
+        },
+        methods:{
+            onOk(){
+                console.log(1);
+                
+            }
         }
     }
 </script>

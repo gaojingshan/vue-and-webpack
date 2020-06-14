@@ -15,7 +15,7 @@
                     </div>
                 </Card>
             </i-col>
-            <i-col span="6">
+            <i-col span="6" v-if="arr.length != 4">
                 <Card class="cardSpan">
                     <span @click="isShowModal = true">+</span>
                 </Card>
@@ -23,41 +23,26 @@
         </Row>
         <!-- Modal -->
         <Modal v-model="isShowModal" title="增加收货地址">
-            <p style="float:left">请选择省市县镇</p>
-            <Dropdown trigger="custom" :visible="isShowDropDown" placement="bottom-start" style="margin-left: 20px;float:left">
-                <a href="javascript:void(0)" @click="isShowDropDown = true">
-                    <em v-if="p == ''">请选择省市县镇</em>
-                    <em v-else>{{p}}{{c}}{{a}}{{s}}(点击修改)</em>
-                    <Icon type="ios-arrow-down"></Icon>
-                </a>
-                <DropdownMenu slot="list" style="width:388px">
-                    <DropdownInn @sHan="sHan" />
-                    <div style="text-align: right;margin:10px;">
-                        <Button type="primary" @click="isShowDropDown = false">取消</Button>
-                    </div>
-                </DropdownMenu>
-            </Dropdown>
+            <ModalInn ref="modalinn" />
+            <!-- 自己做确定取消按钮 -->
+            <div slot="footer">
+                <Button>取消</Button>
+                <Button type="primary" @click="okHan">确定</Button>
+            </div>
         </Modal>
     </div>
 </template>
 
 <script>
     import axios from 'axios';
-    import DropdownInn from './components/DropdownInn.vue';
+    import ModalInn from './components/ModalInn.vue';
     export default {
         data() {
             return {
                 // 接口返回的收货地址信息的数组
                 arr: [],
                 // 是否显示模态框
-                isShowModal: true,
-                // 是否显示下拉菜单
-                isShowDropDown: true,
-                // 子组件传入的pcas
-                p: '',
-                c: '',
-                a: '',
-                s: '',
+                isShowModal: false,
             }
         },
         created() {
@@ -67,15 +52,43 @@
             })
         },
         components: {
-            DropdownInn
+            ModalInn
         },
         methods: {
-            sHan(thing) {
-                this.p = thing.p;
-                this.c = thing.c;
-                this.a = thing.a;
-                this.s = thing.s;
-                this.isShowDropDown=false
+            // 点击确定按钮校验全表
+            okHan() {
+                this.$refs.modalinn.$refs.myform.validate(data => {
+                    if (data) {
+                        const {
+                            p,
+                            c,
+                            a,
+                            s,
+                        } = this.$refs.modalinn;
+                        const {
+                            pcas,
+                            d,
+                            tel,
+                            n,
+                            alias,
+                        } = this.$refs.modalinn.myform;
+                        // 添加数据
+                        axios.post('http://www.aiqianduan.com:56506/shdz/shanshansmart', {
+                            p,
+                            c,
+                            a,
+                            s,
+                            pcas,
+                            d,
+                            tel,
+                            n,
+                            alias,
+                        }).then(data => {
+                            alert(data.data)   ;
+                            this.isShowModal=false                         
+                        })
+                    }
+                })
             }
         }
     }
@@ -94,8 +107,5 @@
                 cursor: pointer;
             }
         }
-    }
-    em {
-        font-style: normal;
     }
 </style>

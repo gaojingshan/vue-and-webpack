@@ -3,13 +3,13 @@
         <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="130">
             <FormItem label="请选择省市县镇" prop="pcas">
                 <!-- <i-input v-model="formValidate.pcas" placeholder="街道/小区/单元门洞/门牌号"></i-input> -->
-                <Dropdown trigger="custom" :visible="isShowDropdown" style="margin-left: 20px;float:left" placement="bottom-start">
+                <Dropdown trigger="custom" :visible="isShowDropdown"  placement="bottom-start">
                     <a href="javascript:void(0)" @click="isShowDropdown = true">
                         <span v-if="p == ''">请选择省市县镇</span>
                         <span v-else>{{p}}{{c}}{{a}}{{s}}</span>
                         <Icon type="ios-arrow-down"></Icon>
                     </a>
-                    <DropdownMenu slot="list">
+                    <DropdownMenu slot="list" style="width: 400px;height: 200px">
                         <DropdownInn class="dropdowninn" @sHan="sHan" />
                         <div style="text-align: right;margin:10px;">
                             <Button type="primary" @click="isShowDropdown = false">取消</Button>

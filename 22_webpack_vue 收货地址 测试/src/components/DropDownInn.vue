@@ -100,17 +100,16 @@
 
 <style lang="less" scoped>
     .wrap {
-        margin: 10px;
+        padding: 5px;
         .hd {
             overflow: hidden;
             border-bottom: 1px solid #eee;
-            height: 22px;
-            line-height: 8px;
+            margin-bottom: 10px;
         }
         .hd p {
             float: left;
             border: 1px solid #eee;
-            padding: 6px;
+            padding: 0 9px;
             font-size: 12px;
             border-right: 0;
             cursor: pointer;

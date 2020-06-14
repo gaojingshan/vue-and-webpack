@@ -1,135 +1,117 @@
 <template>
-    <div class="wrap">
-        <!-- <Row>
-                <i-col span="6">
-                    <h1>你好</h1>
-                </i-col>
-                <i-col span="6">
-                    <h1>你好</h1>
-                </i-col>
-                <i-col span="6">
-                    <h1>你好</h1>
-                </i-col>
-                <i-col span="6">
-                    <h1>你好</h1>
-                </i-col>
-            </Row> -->
-        <Row :gutter="16">
-            <i-col :span="6" v-for="(item, index) in arr" :key="index">
-                <Card>
-                    <div slot="title">
-                        <b>{{item.alias}}</b>
+    <div class="layout">
+        <Layout>
+            <Header>
+                <Menu mode="horizontal" theme="dark" active-name="1">
+                    <div class="layout-logo">
+                        杉姐的网店
                     </div>
-                    <div slot="extra">
-                        <a href="">删除</a>
-                        <a href="">修改</a>
+                    <div class="layout-nav">
+                        <MenuItem name="1">
+                        <Icon type="ios-navigate"></Icon>
+                        Item 1
+                        </MenuItem>
+                        <MenuItem name="2">
+                        <Icon type="ios-keypad"></Icon>
+                        Item 2
+                        </MenuItem>
+                        <MenuItem name="3">
+                        <Icon type="ios-analytics"></Icon>
+                        Item 3
+                        </MenuItem>
+                        <MenuItem name="4">
+                        <Icon type="ios-paper"></Icon>
+                        Item 4
+                        </MenuItem>
                     </div>
-                    <div>
-                        <p><b>地址：</b>{{item.p}}{{item.c}}{{item.a}}{{item.s}}{{item.d}}</p>
-                        <p><b>姓名：</b>{{item.n}}</p>
-                        <p><b>电话：</b>{{item.tel}}</p>
-                    </div>
-                </Card>
-            </i-col>
-            <i-col :span="6" v-if="arr.length != 4">
-                <Card class="p1">
-                    <span class="plusspan" @click="isShowModal = true">+</span>
-                </Card>
-            </i-col>
-        </Row>
-        <!-- 模态框 -->
-        <Modal :value="isShowModal" :loading="true" width="600" title="增加收货地址">
-            <ModalInn ref="modalinn" @updated="loading = false" />
-            <div slot="footer">
-                <Button>取消</Button>
-                <Button type="primary" @click="okHan">确定</Button>
-            </div>
-        </Modal>
-        <Spin></Spin>
+                </Menu>
+            </Header>
+            <Layout>
+                <Sider hide-trigger :style="{background: '#fff'}">
+                    <Menu active-name="1-2" theme="light" width="auto" :open-names="['1']">
+                        <Submenu name="1">
+                            <div slot="title">
+                                <Icon type="ios-navigate"></Icon>
+                                Item 1
+                            </div>
+                            <MenuItem name="1-1">Option 1</MenuItem>
+                            <MenuItem name="1-2">Option 2</MenuItem>
+                            <MenuItem name="1-3">Option 3</MenuItem>
+                        </Submenu>
+                        <Submenu name="2">
+                            <div slot="title">
+                                <Icon type="ios-keypad">
+                                </Icon>
+                                Item 2
+                            </div>
+                            <MenuItem name="2-1">Option 1</MenuItem>
+                            <MenuItem name="2-2">Option 2</MenuItem>
+                        </Submenu>
+                        <Submenu name="3">
+                            <div slot="title">
+                                <Icon type="ios-analytics">
+                                </Icon>
+                                Item 3
+                            </div>
+                            <MenuItem name="3-1">Option 1</MenuItem>
+                            <MenuItem name="3-2">Option 2</MenuItem>
+                        </Submenu>
+                    </Menu>
+                </Sider>
+                <Layout :style="{padding: '0 24px 24px'}">
+                    <Breadcrumb :style="{margin: '24px 0'}">
+                        <BreadcrumbItem>Home</BreadcrumbItem>
+                        <BreadcrumbItem>Components</BreadcrumbItem>
+                        <BreadcrumbItem>Layout</BreadcrumbItem>
+                    </Breadcrumb>
+                    <Content :style="{padding: '24px', minHeight: '280px', background: '#fff'}">
+                        <Shdzgl />
+                    </Content>
+                </Layout>
+            </Layout>
+        </Layout>
     </div>
 </template>
 
 <script>
-    import axios from 'axios';
-    import ModalInn from './components/ModalInn.vue'
+    import Shdzgl from './Shdzgl.vue';
     export default {
-        data() {
-            return {
-                arr: [],
-                // 是否显示弹出层
-                isShowModal: true,
-            }
-        },
         components: {
-            ModalInn
-        },
-        created() {
-            // 请求服务器数据
-            axios.get('http://www.aiqianduan.com:56506/shdz/shanshan').then(data => {
-                this.arr = data.data
-            })
-        },
-        methods: {
-            // 当点击模态框的确定按钮做的事情
-            okHan() {
-                // 检验整个表格  validate 验证的意思
-                // 这里回调的data值，就是表单是否无错，true表示无错，false表示有错
-                this.$refs.modalinn.$refs.myform.validate((data) => {
-                    if (data) {
-                        // 如果没有错误，提炼数据、关闭模态框、上传
-                        const {
-                            n,
-                            tel,
-                            alias,
-                            d
-                        } = this.$refs.modalinn.myform;
-                        const {
-                            p,
-                            c,
-                            a,
-                            s
-                        } = this.$refs.modalinn;
-                        this.isShowModal = false;
-                        
-                        // 添加数据
-                        axios.post('http://www.aiqianduan.com:56506/shdz/shanshan', {
-                            // k-v一致，省略v
-                            p,
-                            c,
-                            a,
-                            s,
-                            d,
-                            n,
-                            alias,
-                            tel
-                        }).then(data => {
-                            alert(data.data)
-                        })
-                    }
-                });
-            }
+            Shdzgl
         }
     }
 </script>
 
 <style lang="less" scoped>
-    .wrap {
-        width: 1000px;
-        margin: 40px auto;
-        .p1 {
-            text-align: center;
-            height: 160px;
-            font-size: 100px;
-            line-height: 120px;
-            .plusspan {
-                cursor: pointer; // 当它自己被触摸，一定要加上一个&符号，如果不加直接写:hover是不对的
-                &:hover {
-                    color: orange;
-                }
-            }
-        }
+    .ivu-layout-header {
+        background-color: orangered;
     }
-    .dropdowninnerbox {
-        height: 150px;
+    .ivu-menu-dark {
+        background-color: orangered;
+    }
+    .layout {
+        border: 1px solid #d7dde4;
+        background: #f5f7f9;
+        position: relative;
+        border-radius: 4px;
+        overflow: hidden;
+    }
+    .layout-logo {
+        width: 100px;
+        height: 30px;
+        background: orangered;
+        border-radius: 3px;
+        float: left;
+        position: relative;
+        top: 15px;
+        left: 20px;
+        color: white;
+        line-height: 30px;
+        font-size: 20px;
+    }
+    .layout-nav {
+        width: 420px;
+        margin: 0 auto;
+        margin-right: 20px;
     }
 </style>

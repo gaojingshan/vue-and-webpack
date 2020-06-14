@@ -1,19 +1,19 @@
 <template>
     <div class="wrap">
         <!-- <Row>
-                                                            <i-col span="6">
-                                                                <h1>你好</h1>
-                                                            </i-col>
-                                                            <i-col span="6">
-                                                                <h1>你好</h1>
-                                                            </i-col>
-                                                            <i-col span="6">
-                                                                <h1>你好</h1>
-                                                            </i-col>
-                                                            <i-col span="6">
-                                                                <h1>你好</h1>
-                                                            </i-col>
-                                                        </Row> -->
+                <i-col span="6">
+                    <h1>你好</h1>
+                </i-col>
+                <i-col span="6">
+                    <h1>你好</h1>
+                </i-col>
+                <i-col span="6">
+                    <h1>你好</h1>
+                </i-col>
+                <i-col span="6">
+                    <h1>你好</h1>
+                </i-col>
+            </Row> -->
         <Row :gutter="16">
             <i-col :span="6" v-for="(item, index) in arr" :key="index">
                 <Card>
@@ -45,6 +45,7 @@
                 <Button type="primary" @click="okHan">确定</Button>
             </div>
         </Modal>
+        <Spin></Spin>
     </div>
 </template>
 

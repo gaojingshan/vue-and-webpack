@@ -26,8 +26,8 @@
                     </div>
                     <div>
                         <p><b>地址：</b>{{item.p}}{{item.c}}{{item.a}}{{item.s}}{{item.d}}</p>
-                        <p><b>姓名:</b>{{item.n}}</p>
-                        <p><b>电话：{{item.tel}}</b></p>
+                        <p><b>姓名：</b>{{item.n}}</p>
+                        <p><b>电话：</b>{{item.tel}}</p>
                     </div>
                 </Card>
             </i-col>

@@ -28,10 +28,10 @@
             <FormItem label="地址别名" prop="alias">
                 <Row>
                     <i-col span="6">
-                        <i-input v-model="myform.alias">{{myform.alias}}</i-input>
+                        <i-input v-model="myform.alias"></i-input>
                     </i-col>
                     <i-col span="18">
-                        <p class="palias" v-for="(item, index) in ['家','公司','学校']" :key="index" @click="myform.alias = item">{{item}}</p>
+                        <p class="palias" v-for="(item, index) in ['家','公司','学校']" :key="index" @click="aliasBtnHan(item)">{{item}}</p>
                     </i-col>
                 </Row>
             </FormItem>
@@ -111,6 +111,9 @@
                 this.s = thing.s;
                 this.isShowDropDown = false;
                 this.$set(this.myform, 'pcas', this.p + this.c + this.a + this.s)
+            },
+            aliasBtnHan(thing) {
+                this.$set(this.myform, 'alias', thing)
             }
         }
     }

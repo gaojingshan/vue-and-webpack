@@ -22,8 +22,8 @@
             </i-col>
         </Row>
         <!-- Modal -->
-        <Modal v-model="isShowModal" title="增加收货地址">
-            <ModalInn ref="modalinn" />
+        <Modal v-model="isShowModal" title="增加收货地址" width="600" :loading="true">
+            <ModalInn ref="modalinn" @updated="loading = false"/>
             <!-- 自己做确定取消按钮 -->
             <div slot="footer">
                 <Button>取消</Button>
@@ -42,7 +42,7 @@
                 // 接口返回的收货地址信息的数组
                 arr: [],
                 // 是否显示模态框
-                isShowModal: false,
+                isShowModal: true,
             }
         },
         created() {
@@ -66,26 +66,25 @@
                             s,
                         } = this.$refs.modalinn;
                         const {
-                            pcas,
                             d,
                             tel,
                             n,
                             alias,
                         } = this.$refs.modalinn.myform;
+                        this.isShowModal=false ;
                         // 添加数据
                         axios.post('http://www.aiqianduan.com:56506/shdz/shanshansmart', {
                             p,
                             c,
                             a,
                             s,
-                            pcas,
                             d,
                             tel,
                             n,
                             alias,
                         }).then(data => {
                             alert(data.data)   ;
-                            this.isShowModal=false                         
+                                                    
                         })
                     }
                 })

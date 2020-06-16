@@ -60,7 +60,7 @@
             return {
                 arr: [],
                 // 是否显示弹出层
-                isShowModal: false,
+                isShowModal: true,
             }
         },
         components: {

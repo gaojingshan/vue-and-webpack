@@ -43,8 +43,9 @@
             </FormItem>
         </Form>
 
-        <Modal v-model="isShowCainiaoModal">
-            菜鸟菜鸟菜鸟菜鸟菜鸟菜鸟
+        <Modal v-model="isShowCainiaoModal" title="请选择菜鸟驿站代收点" :width='500'>
+            
+            <CainiaoModal :p="p" :c="c" v-if="isShowCainiaoModal"/>
         </Modal>
     </div>
 </template>
@@ -52,9 +53,11 @@
 <script>
     import axios from "axios";
     import DropDownInn from "./DropDownInn.vue";
+    import CainiaoModal from './CainiaoModal.vue';
     export default {
         components: {
-            DropDownInn
+            DropDownInn,
+            CainiaoModal
         },
         
         created() {

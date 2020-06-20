@@ -43,7 +43,7 @@
             </FormItem>
         </Form>
 
-        <Modal v-model="isShowCainiaoModal" title="请选择菜鸟驿站代收点" :width='500'>
+        <Modal v-model="isShowCainiaoModal" title="请选择菜鸟驿站代收点" :width='600'>
             
             <CainiaoModal :p="p" :c="c" v-if="isShowCainiaoModal"/>
         </Modal>

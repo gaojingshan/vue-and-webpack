@@ -28,16 +28,16 @@
                             <div v-for="(v,k) in data1" :key="k" class="contentrow">
                                 <b>{{k}}:</b>
                                 <a href="#" v-for="p in v" :key="p" @click="shengHan(p)">
-                                                    {{p}}
-                                                </a>
+                                    {{p}}
+                                </a>
                             </div>
                         </div>
                         <div v-if="sheng_show_type == 'quyu'">
                             <div v-for="(v,k) in data2" :key="k" class="contentrow">
                                 <b>{{k}}:</b>
                                 <a href="#" v-for="p in v" :key="p" @click="shengHan(p)">
-                                                    {{p}}
-                                                </a>
+                                    {{p}}
+                                </a>
                             </div>
                         </div>
                     </div>

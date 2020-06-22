@@ -54,8 +54,8 @@
             </div>
             <!-- {{Object.keys(pcasobj)}} -->
             <!-- <p v-if="nowShow == 'p'">
-                                <a v-for="(v, p) in pcasobj" :key="p" href="javascript:;" @click="shengHan(p)">{{p}}</a>
-                            </p> -->
+                    <a v-for="(v, p) in pcasobj" :key="p" href="javascript:;" @click="shengHan(p)">{{p}}</a>
+                </p> -->
         </div>
         <div v-else>
             <Spin style="position:absolute;left:50%;top:50%;margin-left:-15px;margin-top:-15px"></Spin>

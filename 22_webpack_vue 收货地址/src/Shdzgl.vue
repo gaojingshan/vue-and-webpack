@@ -34,8 +34,8 @@
             <!-- v-if="arr.length != 4" -->
             <i-col :span="6">
                 <Card class="p1" style="position: relative">
-                    <span class="plusspan" @click="isShowModal = true">
-                            <div class="jiahao"></div>
+                    <span class="plusspan" >
+                            <div class="jiahao" @click="isShowModal = true"></div>
                         </span>
                 </Card>
             </i-col>

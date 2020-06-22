@@ -1,110 +1,115 @@
 <template>
-    <div class="wrap">
-        <Row :gutter="16">
-            <i-col span="6" v-for="(item, index) in arr" :key="index">
-                <Card>
-                    <p slot="title"><b style="font-size:14px">{{item.alias}}</b></p>
-                    <p slot="extra">
-                        <a href="#">删除</a>
-                        <a href="#">修改</a>
-                    </p>
-                    <div>
-                        <p><b>地址：</b>{{item.p}}{{item.c}}{{item.a}}{{item.s}}{{item.d}}</p>
-                        <p><b>姓名：</b>{{item.n}}</p>
-                        <p><b>电话：</b>{{item.tel}}</p>
+    <div class="layout">
+        <Layout>
+            <Header>
+                <Menu mode="horizontal" theme="dark" active-name="1">
+                    <div class="layout-logo">
+                        杉姐
                     </div>
-                </Card>
-            </i-col>
-            <i-col span="6" v-if="arr.length != 4">
-                <Card class="cardSpan">
-                    <span @click="isShowModal = true">+</span>
-                </Card>
-            </i-col>
-        </Row>
-        <!-- Modal -->
-        <Modal v-model="isShowModal" title="增加收货地址" width="600" :loading="true">
-            <ModalInn ref="modalinn" @updated="loading = false"/>
-            <!-- 自己做确定取消按钮 -->
-            <div slot="footer">
-                <Button>取消</Button>
-                <Button type="primary" @click="okHan">确定</Button>
-            </div>
-        </Modal>
+                    <div class="layout-nav">
+                        <MenuItem name="1">
+                        <Icon type="ios-navigate"></Icon>
+                        Item 1
+                        </MenuItem>
+                        <MenuItem name="2">
+                        <Icon type="ios-keypad"></Icon>
+                        Item 2
+                        </MenuItem>
+                        <MenuItem name="3">
+                        <Icon type="ios-analytics"></Icon>
+                        Item 3
+                        </MenuItem>
+                        <MenuItem name="4">
+                        <Icon type="ios-paper"></Icon>
+                        Item 4
+                        </MenuItem>
+                    </div>
+                </Menu>
+            </Header>
+            <Layout>
+                <Sider hide-trigger :style="{background: '#fff'}">
+                    <Menu active-name="1-2" theme="light" width="auto" :open-names="['1']">
+                        <Submenu name="1">
+                            <div slot="title">
+                                <Icon type="ios-navigate"></Icon>
+                                Item 1
+                            </div>
+                            <MenuItem name="1-1">Option 1</MenuItem>
+                            <MenuItem name="1-2">Option 2</MenuItem>
+                            <MenuItem name="1-3">Option 3</MenuItem>
+                        </Submenu>
+                        <Submenu name="2">
+                            <div slot="title">
+                                <Icon type="ios-keypad"></Icon>
+                                Item 2
+                            </div>
+                            <MenuItem name="2-1">Option 1</MenuItem>
+                            <MenuItem name="2-2">Option 2</MenuItem>
+                        </Submenu>
+                        <Submenu name="3">
+                            <div slot="title">
+                                <Icon type="ios-analytics"></Icon>
+                                Item 3
+                            </div>
+                            <MenuItem name="3-1">Option 1</MenuItem>
+                            <MenuItem name="3-2">Option 2</MenuItem>
+                        </Submenu>
+                    </Menu>
+                </Sider>
+                <Layout :style="{padding: '0 24px 24px'}">
+                    <Breadcrumb :style="{margin: '24px 0'}">
+                        <BreadcrumbItem>Home</BreadcrumbItem>
+                        <BreadcrumbItem>Components</BreadcrumbItem>
+                        <BreadcrumbItem>Layout</BreadcrumbItem>
+                    </Breadcrumb>
+                    <Content :style="{padding: '24px', minHeight: '280px', background: '#fff'}">
+                        <Shdzgl />
+                    </Content>
+                </Layout>
+            </Layout>
+        </Layout>
     </div>
 </template>
 
 <script>
-    import axios from 'axios';
-    import ModalInn from './components/ModalInn.vue';
+    import Shdzgl from './Shdzgl.vue';
     export default {
-        data() {
-            return {
-                // 接口返回的收货地址信息的数组
-                arr: [],
-                // 是否显示模态框
-                isShowModal: true,
-            }
-        },
-        created() {
-            axios.get('http://www.aiqianduan.com:56506/shdz/shanshansmart').then(data => {
-                console.log(data.data);
-                this.arr = data.data;
-            })
-        },
         components: {
-            ModalInn
-        },
-        methods: {
-            // 点击确定按钮校验全表
-            okHan() {
-                this.$refs.modalinn.$refs.myform.validate(data => {
-                    if (data) {
-                        const {
-                            p,
-                            c,
-                            a,
-                            s,
-                        } = this.$refs.modalinn;
-                        const {
-                            d,
-                            tel,
-                            n,
-                            alias,
-                        } = this.$refs.modalinn.myform;
-                        this.isShowModal=false ;
-                        // 添加数据
-                        axios.post('http://www.aiqianduan.com:56506/shdz/shanshansmart', {
-                            p,
-                            c,
-                            a,
-                            s,
-                            d,
-                            tel,
-                            n,
-                            alias,
-                        }).then(data => {
-                            alert(data.data)   ;
-                                                    
-                        })
-                    }
-                })
-            }
+            Shdzgl
         }
     }
 </script>
 
 <style lang="less" scoped>
-    .wrap {
-        width: 1000px;
-        margin: 40px auto;
-        .cardSpan {
-            line-height: 120px;
-            font-size: 100px;
-            text-align: center;
-            height: 168px;
-            span {
-                cursor: pointer;
-            }
-        }
+    .layout {
+        border: 1px solid #d7dde4;
+        background: #f5f7f9;
+        position: relative;
+        border-radius: 4px;
+        overflow: hidden;
+    }
+    .layout-logo {
+        width: 100px;
+        height: 30px;
+        line-height: 30px;
+        background: blue;
+        border-radius: 3px;
+        float: left;
+        position: relative;
+        top: 15px;
+        left: 20px;
+        color: white;
+        font-size: 20px;
+    }
+    .layout-nav {
+        width: 420px;
+        margin: 0 auto;
+        margin-right: 20px;
+    }
+    .ivu-menu-dark {
+        background: blue;
+    }
+    .ivu-layout-header {
+        background: blue;
     }
 </style>

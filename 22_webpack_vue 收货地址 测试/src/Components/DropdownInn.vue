@@ -3,10 +3,10 @@
     <div class="ddinn">
         <div v-if="Object.keys(pcasobj).length !=0">
             <div class="hd">
-                <span @click="hd_han('p')">
+                <span :class="{'cur' : nowShow == 'p'}" @click="hd_han('p')">
                         {{p == '' ? '请选择省份（直辖市）' : p}}
                     </span>
-                <span v-if="p != ''" @click="hd_Han('c')">
+                <span v-if="p != ''" :class="{'cur' : nowShow=='c'}" @click="hd_Han('c')">
                         {{c==''?'请选择城市':c}}
                     </span>
                 <span v-if="c != ''" @click="hd_Han('a')">

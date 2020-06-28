@@ -3,7 +3,9 @@
         <Layout>
             <Header>
                 <Menu mode="horizontal" theme="dark" active-name="1">
-                    <div class="layout-logo">杉杉</div>
+                    <div class="layout-logo">
+                        杉杉
+                    </div>
                     <div class="layout-nav">
                         <MenuItem name="1">
                         <Icon type="ios-navigate"></Icon>
@@ -78,7 +80,7 @@
     }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
     .layout {
         border: 1px solid #d7dde4;
         background: #f5f7f9;
@@ -105,13 +107,8 @@
         margin: 0 auto;
         margin-right: 20px;
     }
+    .ivu-menu-dark,
     .ivu-layout-header {
         background: blue;
-        padding: 0 50px;
-        height: 64px;
-        line-height: 64px;
     }
-    .ivu-menu-dark {
-    background: blue;
-}
 </style>

@@ -3,7 +3,9 @@
         <Row :gutter="16">
             <i-col span="6" v-for="(item,index) in arr" :key="index">
                 <Card>
-                    <div slot="title"><b>{{item.alias}}</b></div>
+                    <div slot="title">
+                        <b>{{item.alias}}</b>
+                    </div>
                     <div slot="extra">
                         <a href="#">删除</a>
                         <a href="#">修改</a>
@@ -15,16 +17,19 @@
                     </div>
                 </Card>
             </i-col>
-            <i-col span="6">
+            <i-col span="6" v-if="arr.length != 4">
                 <Card class="p1">
                     <div class="jiahao" @click="isShowModalInn = true"></div>
                 </Card>
             </i-col>
         </Row>
-
         <!-- 模态框 -->
-        <Modal v-model="isShowModalInn" title="增加收货地址" width="600" @on-ok="isShowModalInn = false" @on-cancel="isShowModalInn = false">
-            <ModalInn />
+        <Modal v-model="isShowModalInn" :loading="true" title="增加收货地址" width="600">
+            <ModalInn ref="modalinn" @updated="loading = false" />
+            <div slot="footer">
+                <Button>取消</Button>
+                <Button type="primary" @click="okHan">确定</Button>
+            </div>
         </Modal>
     </div>
 </template>
@@ -36,16 +41,58 @@
         data() {
             return {
                 arr: [],
-                isShowModalInn:true
+                // 是否显示弹出层
+                isShowModalInn: true
             }
         },
         components: {
             ModalInn
         },
+        // 生命周期
         created() {
+            // 请求服务器数据
             axios.get('http://www.aiqianduan.com:56506/shdz/shanshanwin').then(data => {
                 this.arr = data.data;
             })
+        },
+        methods: {
+            // 当点击模态框的确定按钮做的事情
+            okHan() {
+                // 校验整个表格  validate 验证的意思
+                // 这里回调的data值，就是表单是否无错，true表示无错，false表示有错
+                this.$refs.modalinn.$refs.myform.validate((data) => {
+                    if (data) {
+                        // 如果没有错误，提炼数据、关闭模态框、上传
+                        const {
+                            d,
+                            tel,
+                            n,
+                            alias,
+                        } = this.$refs.modalinn.myform;
+                        const {
+                            p,
+                            c,
+                            a,
+                            s,
+                        } = this.$refs.modalinn;
+                        this.isShowModalInn = false;
+                        // 添加数据
+                        // axios.post('http://www.aiqianduan.com:56506/shdz/shanshanwin', {
+                        //     // k,v一致，省略v
+                        //     p,
+                        //     c,
+                        //     a,
+                        //     s,
+                        //     d,
+                        //     tel,
+                        //     n,
+                        //     alias
+                        // }).then(data => {
+                        //     alert(data.data)
+                        // })
+                    }
+                })
+            }
         }
     }
 </script>

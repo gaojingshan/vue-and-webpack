@@ -4,17 +4,17 @@
             <!-- 头部 -->
             <div class="hd">
                 <span :class="{'cur' : nowShow == 'p'}" @click="hd_han('p')">
-            {{p == '' ? '请选择省份（直辖市）': p}}
-        </span>
+                {{p == '' ? '请选择省份（直辖市）': p}}
+            </span>
                 <span :class="{'cur' : nowShow == 'c'}" @click="hd_han('c')">
-            {{c == '' ? '请选择城市': c}}
-        </span>
+                {{c == '' ? '请选择城市': c}}
+            </span>
                 <span :class="{'cur' : nowShow == 'a'}" @click="hd_han('a')">
-            {{a == '' ? '请选择县（区）': a}}
-        </span>
+                {{a == '' ? '请选择县（区）': a}}
+            </span>
                 <span :class="{'cur' : nowShow == 's'}" @click="hd_han('s')">
-            {{s == '' ? '请选择镇（街道）': s}}
-        </span>
+                {{s == '' ? '请选择镇（街道）': s}}
+            </span>
             </div>
             <!-- 正文 -->
             <div class="bd">
@@ -28,8 +28,8 @@
                             <div v-for="(v ,k) in data1" :key="k" class="contentrow">
                                 <b>{{k}}:</b>
                                 <a href="#" v-for="p in v" :key="p" @click="shengHan(p)">
-                            {{p}}
-                        </a>
+                                {{p}}
+                            </a>
                             </div>
                         </div>
                         <div v-if="sheng_show_type == 'quyu'">
@@ -59,21 +59,21 @@
 
 <script>
     export default {
-        props: ['pcasobj'],
+        props: ['origin_p','origin_c','origin_a','origin_s','pcasobj'],
         data() {
             return {
                 // 省的当前显示模式
                 sheng_show_type: 'pinyin',
                 // 当前显示什么，pcas
-                nowShow: 'p',
+                nowShow: this.origin_s == '' ? 'p' : 's',
                 // 当前选择的省
-                p: '',
+                p: this.origin_p || '',
                 // 当前选择的市
-                c: '',
+                c: this.origin_c || '',
                 // 当前选择的县
-                a: '',
+                a: this.origin_a || '',
                 // 当前选择的镇
-                s: '',
+                s: this.origin_s || '',
                 data1: {
                     A: ["安徽省"],
                     B: ["北京市"],
@@ -150,6 +150,13 @@
             // 点击镇的时候
             zhenHan(s) {
                 this.s = s;
+                // 通知父组件
+                this.$emit('zhenHan', {
+                    p: this.p,
+                    c: this.c,
+                    a: this.a,
+                    s: this.s
+                })
             },
         }
     }
@@ -204,7 +211,7 @@
                 }
             }
         }
-        .spin{
+        .spin {
             position: absolute;
             left: 50%;
             top: 50%;

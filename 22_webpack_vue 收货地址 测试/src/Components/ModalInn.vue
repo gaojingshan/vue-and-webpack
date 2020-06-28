@@ -4,11 +4,15 @@
             <FormItem label="请选择省市县镇" prop="pcas">
                 <Dropdown trigger="custom" placement="bottom-start" :visible="isShowDropDown">
                     <a href="javascript:void(0)" @click="isShowDropDown = true">
-                        请选择省市县镇
+                        <em v-if="s != ''">{{p}}{{c}}{{a}}{{s}}（点击修改）</em>
+                        <em v-else>请选择省市县镇</em>
                         <Icon type="ios-arrow-down"></Icon>
                     </a>
-                    <DropdownMenu slot="list">
-                        <DropdownInn :pcasobj="pcasobj"/>
+                    <DropdownMenu slot="list" style="width:450px;height:320px">
+                        <div>
+                            <!-- 在把pcas传回子组件:origin_ -->
+                            <DropdownInn v-if="isShowDropDown" @zhenHan="zhenHan" :origin_p="p" :origin_c="c" :origin_a="a" :origin_s="s" :pcasobj="pcasobj" />
+                        </div>
                         <div style="text-align: right;margin:10px;">
                             <Button type="primary" @click="isShowDropDown = false">取消</Button>
                         </div>
@@ -17,6 +21,10 @@
             </FormItem>
             <FormItem label="详细地址" prop="d">
                 <i-input v-model="myform.d" placeholder="街道/小区/单元门洞/门牌号"></i-input>
+                <Checkbox v-model="useCainiao" :disabled="s == ''">使用菜鸟驿站代收</Checkbox>
+                <Alert type="error" v-show="s == ''">
+                    请先选择省市县镇再勾选此对勾
+                </Alert>
             </FormItem>
             <FormItem label="手机号" prop="tel">
                 <i-input v-model="myform.tel" placeholder="请输入合法的手机号码"></i-input>
@@ -35,22 +43,36 @@
                 </Row>
             </FormItem>
         </Form>
+        <Modal v-model="isShowCainiaoModal" title="请选择菜鸟驿站代收点" width='600'>
+            <CainiaoModal :p="p" :c="c" v-if="isShowCainiaoModal" />
+        </Modal>
     </div>
 </template>
 
 <script>
-import axios from 'axios';
-import DropdownInn from './DropDownInn.vue';
+    import axios from 'axios';
+    import DropdownInn from './DropDownInn.vue';
+    import CainiaoModal from './CainiaoModal.vue';
     export default {
-        components:{
-            DropdownInn
+        components: {
+            DropdownInn,
+            CainiaoModal
         },
         data() {
             return {
                 // 是否显示出菜单
-                isShowDropDown: true,
+                isShowDropDown: false,
                 // 总数据
-                pcasobj:{},
+                pcasobj: {},
+                // 菜鸟驿站复选框的选中与否
+                useCainiao: false,
+                // 菜鸟Modal
+                isShowCainiaoModal: true,
+                // 父组件接收子组件的pcas
+                p: '',
+                c: '',
+                a: '',
+                s: '',
                 myform: {
                     // 详细地址
                     d: '',
@@ -102,24 +124,43 @@ import DropdownInn from './DropDownInn.vue';
             }
         },
         methods: {
+            // 当选完镇之后
+            zhenHan(obj) {
+                this.p = obj.p;
+                this.c = obj.c;
+                this.a = obj.a;
+                this.s = obj.s;
+                this.isShowDropDown = false;
+                // 更改pcas属性
+                this.$set(this.myform, 'pcas', this.p + this.c + this.a + this.s);
+            },
             // 点击地址别名的常用按钮，做的事情
             aliasBtnHan(thing) {
                 this.$set(this.myform, 'alias', thing)
             }
         },
-        created(){
-            axios.get('http://www.aiqianduan.com:56506/pcas').then(data=>{
-                this.pcasobj=data.data;
+        created() {
+            axios.get('http://www.aiqianduan.com:56506/pcas').then(data => {
+                this.pcasobj = data.data;
             })
+        },
+        // 监控。vue有双向绑定，所以就必须有watch,得到改变那一瞬间的事件
+        watch: {
+            useCainiao(v) {
+                if (v) {
+                    // 如果用户勾选了使用菜鸟驿站服务，那么就弹出一个新的弹出层
+                    this.isShowCainiaoModal = true;
+                }
+            }
         }
     }
 </script>
 
 <style lang="less" scoped>
     .btn {
-        border: 1px solid #eee;
-        padding: 6px 10px;
-        margin-left: 10px;
-        cursor: pointer;
+        margin-left: 6px;
+    }
+    em {
+        font-style: normal;
     }
 </style>

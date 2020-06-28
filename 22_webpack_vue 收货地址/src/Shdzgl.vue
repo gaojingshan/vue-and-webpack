@@ -25,14 +25,13 @@
             </i-col>
         </Row>
         <!-- 模态框 -->
-        <Modal :value="isShowModal" :loading="true" width="600" title="增加收货地址">
+        <Modal v-model="isShowModal" :loading="true" width="600" title="增加收货地址">
             <ModalInn ref="modalinn" @updated="loading = false" />
             <div slot="footer">
                 <Button>取消</Button>
                 <Button type="primary" @click="okHan">确定</Button>
             </div>
         </Modal>
-        <Spin></Spin>
     </div>
 </template>
 
@@ -120,8 +119,5 @@
                 }
             }
         }
-    }
-    .dropdowninnerbox {
-        height: 150px;
     }
 </style>

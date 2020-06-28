@@ -3,19 +3,17 @@
         <div v-if="Object.keys(pcasobj).length != 0">
             <div class="hd">
                 <span :class="{'cur' : nowShow == 'p'}" @click="hd_han('p')">
-                                {{p =='' ? '请选择省份（直辖市）' : p}}
-                            </span>
+                        {{p =='' ? '请选择省份（直辖市）' : p}}
+                    </span>
                 <span v-if="p != ''" :class="{'cur' : nowShow == 'c'}" @click="hd_han('c')">
-                                {{c =='' ? '请选择城市' : c}}
-                                                    
-                            </span>
+                        {{c =='' ? '请选择城市' : c}}                
+                    </span>
                 <span v-if="c != ''" :class="{'cur' : nowShow == 'a'}" @click="hd_han('a')">
-                                {{a =='' ? '请选择县（区）' : a}}
-                                                    
-                            </span>
+                        {{a =='' ? '请选择县（区）' : a}}          
+                    </span>
                 <span v-if="a != ''" :class="{'cur' : nowShow == 's'}" @click="hd_han('s')">
-                                {{s =='' ? '请选择镇（街道）' : s}}
-                            </span>
+                        {{s =='' ? '请选择镇（街道）' : s}}
+                    </span>
             </div>
             <div class="bd">
                 <div v-if="nowShow == 'p'" class="s_box">
@@ -28,16 +26,16 @@
                             <div v-for="(v,k) in data1" :key="k" class="contentrow">
                                 <b>{{k}}:</b>
                                 <a href="#" v-for="p in v" :key="p" @click="shengHan(p)">
-                                            {{p}}
-                                        </a>
+                                        {{p}}
+                                    </a>
                             </div>
                         </div>
                         <div v-if="sheng_show_type == 'quyu'">
                             <div v-for="(v,k) in data2" :key="k" class="contentrow">
                                 <b>{{k}}:</b>
                                 <a href="#" v-for="p in v" :key="p" @click="shengHan(p)">
-                                            {{p}}
-                                        </a>
+                                        {{p}}
+                                    </a>
                             </div>
                         </div>
                     </div>

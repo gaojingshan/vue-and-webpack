@@ -9,7 +9,8 @@
                         <Icon type="ios-arrow-down"></Icon>
                     </a>
                     <DropdownMenu slot="list" style="width: 450px;height: 320px">
-                        <div class="dropdowninnerbox">
+                        <div>
+                            <!-- 在把pcas传回子组件:origin_ -->
                             <DropDownInn v-if="isShowDropDown" @zhenHan="zhenHan" :origin_p="p" :origin_c="c" :origin_a="a" :origin_s="s" :pcasobj="pcasobj" />
                         </div>
                         <div style="text-align: right;margin:10px;">
@@ -43,8 +44,7 @@
             </FormItem>
         </Form>
 
-        <Modal v-model="isShowCainiaoModal" title="请选择菜鸟驿站代收点" :width='600'>
-            
+        <Modal v-model="isShowCainiaoModal" title="请选择菜鸟驿站代收点" width='600'>
             <CainiaoModal :p="p" :c="c" v-if="isShowCainiaoModal"/>
         </Modal>
     </div>
@@ -70,7 +70,7 @@
         data() {
             return {
                 // 是否显示出菜单
-                isShowDropDown: true,
+                isShowDropDown: false,
                 // 总数据
                 pcasobj: {},
                 // 菜鸟驿站复选框的选中与否

@@ -75,7 +75,6 @@
                 nowname: ''
             };
         },
-        created() {},
         methods: {
             // 点击左侧li
             liClickHan(item) {

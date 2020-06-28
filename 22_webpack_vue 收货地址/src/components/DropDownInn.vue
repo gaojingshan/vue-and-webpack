@@ -3,19 +3,19 @@
         <div v-if="Object.keys(pcasobj).length != 0">
             <div class="hd">
                 <span :class="{'cur' : nowShow == 'p'}" @click="hd_han('p')">
-                        {{p =='' ? '请选择省份（直辖市）' : p}}
-                    </span>
+                                {{p =='' ? '请选择省份（直辖市）' : p}}
+                            </span>
                 <span v-if="p != ''" :class="{'cur' : nowShow == 'c'}" @click="hd_han('c')">
-                        {{c =='' ? '请选择城市' : c}}
-                                            
-                    </span>
+                                {{c =='' ? '请选择城市' : c}}
+                                                    
+                            </span>
                 <span v-if="c != ''" :class="{'cur' : nowShow == 'a'}" @click="hd_han('a')">
-                        {{a =='' ? '请选择县（区）' : a}}
-                                            
-                    </span>
+                                {{a =='' ? '请选择县（区）' : a}}
+                                                    
+                            </span>
                 <span v-if="a != ''" :class="{'cur' : nowShow == 's'}" @click="hd_han('s')">
-                        {{s =='' ? '请选择镇（街道）' : s}}
-                    </span>
+                                {{s =='' ? '请选择镇（街道）' : s}}
+                            </span>
             </div>
             <div class="bd">
                 <div v-if="nowShow == 'p'" class="s_box">
@@ -28,16 +28,16 @@
                             <div v-for="(v,k) in data1" :key="k" class="contentrow">
                                 <b>{{k}}:</b>
                                 <a href="#" v-for="p in v" :key="p" @click="shengHan(p)">
-                                    {{p}}
-                                </a>
+                                            {{p}}
+                                        </a>
                             </div>
                         </div>
                         <div v-if="sheng_show_type == 'quyu'">
                             <div v-for="(v,k) in data2" :key="k" class="contentrow">
                                 <b>{{k}}:</b>
                                 <a href="#" v-for="p in v" :key="p" @click="shengHan(p)">
-                                    {{p}}
-                                </a>
+                                            {{p}}
+                                        </a>
                             </div>
                         </div>
                     </div>
@@ -52,13 +52,12 @@
                     <a v-for="(s, index) in pcasobj[p][c][a]" :key="index" href="javascript:;" @click="zhenHan(s)">{{s}}</a>
                 </p>
             </div>
-            <!-- {{Object.keys(pcasobj)}} -->
             <!-- <p v-if="nowShow == 'p'">
-                    <a v-for="(v, p) in pcasobj" :key="p" href="javascript:;" @click="shengHan(p)">{{p}}</a>
-                </p> -->
+                        <a v-for="(v, p) in pcasobj" :key="p" href="javascript:;" @click="shengHan(p)">{{p}}</a>
+                    </p> -->
         </div>
         <div v-else>
-            <Spin style="position:absolute;left:50%;top:50%;margin-left:-15px;margin-top:-15px"></Spin>
+            <Spin class="spin"></Spin>
         </div>
     </div>
 </template>
@@ -124,8 +123,7 @@
                 }
             };
         },
-        created() {
-        },
+        created() {},
         methods: {
             // 用户点击某个省之后做的事情
             shengHan(p) {
@@ -189,9 +187,6 @@
                     border-bottom: 2px solid red;
                     color: red;
                 }
-                em {
-                    font-style: normal;
-                }
                 &:last-child {
                     border-right: 1px solid #eee;
                 }
@@ -200,6 +195,11 @@
         .bd {
             height: 220px; // 溢出滚动
             padding-left: 10px;
+            .s_box_bd {
+                height: 180px;
+                overflow-y: scroll;
+                margin-top: 10px;
+            }
             .contentrow {
                 line-height: 20px;
                 font-family: 'consolas';
@@ -207,16 +207,20 @@
                     padding: 0 6px;
                 }
             }
-            .s_box_bd {
-                height: 180px;
-                overflow-y: scroll;
-                margin-top: 10px;
+            p {
+                a {
+                    float: left;
+                    margin-right: 10px;
+                    font-size: 12px;
+                }
             }
         }
-    }
-    p a {
-        float: left;
-        margin-right: 10px;
-        font-size: 12px;
+        .spin {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-left: -15px;
+            margin-top: -15px
+        }
     }
 </style>

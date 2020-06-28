@@ -34,7 +34,7 @@
             <FormItem label="地址别名" prop="alias">
                 <Row>
                     <i-col :span="6">
-                        <i-input v-model="myform.alias" placeholder></i-input>
+                        <i-input v-model="myform.alias"></i-input>
                     </i-col>
                     <i-col :span="18">
                         <Button class="btn" v-for="(item, index) in ['家','公司','学校']" :key="index" @click="aliasBtnHan(item)">{{item}}</Button>
@@ -70,13 +70,13 @@
         data() {
             return {
                 // 是否显示出菜单
-                isShowDropDown: false,
+                isShowDropDown: true,
                 // 总数据
                 pcasobj: {},
                 // 菜鸟驿站复选框的选中与否
                 useCainiao: false,
                 // 菜鸟modal
-                isShowCainiaoModal:true,
+                isShowCainiaoModal:false,
                 // 父组件接收子组件的pcas
                 p: "黑龙江省",
                 c: "哈尔滨市",

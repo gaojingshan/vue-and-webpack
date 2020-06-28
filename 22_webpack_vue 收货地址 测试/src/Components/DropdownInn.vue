@@ -1,32 +1,35 @@
-
 <template>
     <div class="ddinn">
-        <div v-if="Object.keys(pcasobj).length !=0">
+        <div v-if="Object.keys(pcasobj).length != 0">
+            <!-- 头部 -->
             <div class="hd">
                 <span :class="{'cur' : nowShow == 'p'}" @click="hd_han('p')">
-                        {{p == '' ? '请选择省份（直辖市）' : p}}
-                    </span>
-                <span v-if="p != ''" :class="{'cur' : nowShow=='c'}" @click="hd_Han('c')">
-                        {{c==''?'请选择城市':c}}
-                    </span>
-                <span v-if="c != ''" @click="hd_Han('a')">
-                        {{a==''?'请选择县（区）':a}}
-                    </span>
-                <span v-if="a != ''" @click="hd_Han('s')">
-                        {{s==''?'请选择镇（街道）':s}}
-                    </span>
+            {{p == '' ? '请选择省份（直辖市）': p}}
+        </span>
+                <span :class="{'cur' : nowShow == 'c'}" @click="hd_han('c')">
+            {{c == '' ? '请选择城市': c}}
+        </span>
+                <span :class="{'cur' : nowShow == 'a'}" @click="hd_han('a')">
+            {{a == '' ? '请选择县（区）': a}}
+        </span>
+                <span :class="{'cur' : nowShow == 's'}" @click="hd_han('s')">
+            {{s == '' ? '请选择镇（街道）': s}}
+        </span>
             </div>
+            <!-- 正文 -->
             <div class="bd">
-                <div class="s_box" v-if="nowShow == 'p'">
+                <div v-if="nowShow == 'p'" class="s_box">
                     <RadioGroup v-model="sheng_show_type" type="button" size="small">
                         <Radio label="pinyin">按拼音</Radio>
                         <Radio label="quyu">按区域</Radio>
                     </RadioGroup>
                     <div class="s_box_bd">
                         <div v-if="sheng_show_type == 'pinyin'">
-                            <div v-for="(v,k) in data1" :key="k" class="contentrow">
+                            <div v-for="(v ,k) in data1" :key="k" class="contentrow">
                                 <b>{{k}}:</b>
-                                <a href="#" v-for="p in v" :key="p" @click="shengHan(p)">{{p}}</a>
+                                <a href="#" v-for="p in v" :key="p" @click="shengHan(p)">
+                            {{p}}
+                        </a>
                             </div>
                         </div>
                         <div v-if="sheng_show_type == 'quyu'">
@@ -38,31 +41,39 @@
                     </div>
                 </div>
                 <p v-if="nowShow == 'c'">
-                    <a v-for="(v, c) in pcasobj[p]" :key="c" href="javascript:;" @click="shiHan(c)">{{c}}</a>
+                    <a href="javascript:;" v-for="(v, c) in pcasobj[p]" :key="c" @click="shiHan(c)">{{c}}</a>
                 </p>
                 <p v-if="nowShow == 'a'">
-                    <a v-for="(v, a) in pcasobj[p][c]" :key="a" href="javascript:;" @click="xianHan(a)">{{a}}</a>
+                    <a href="javascript:;" v-for="(v, a) in pcasobj[p][c]" :key="a" @click="xianHan(a)">{{a}}</a>
                 </p>
                 <p v-if="nowShow == 's'">
-                    <a v-for="(s, index) in pcasobj[p][c][a]" :key="index" href="javascript:;" @click="zhenHan(s)">{{s}}</a>
+                    <a href="javascript:;" v-for="(s,index) in pcasobj[p][c][a]" :key="index" @click="zhenHan(s)">{{s}}</a>
                 </p>
             </div>
+        </div>
+        <div v-else>
+            <Spin class="spin"></Spin>
         </div>
     </div>
 </template>
 
 <script>
-    import axios from 'axios';
     export default {
+        props: ['pcasobj'],
         data() {
             return {
-                pcasobj: {},
-                // 用户选择的省
-                p: '',
                 // 省的当前显示模式
                 sheng_show_type: 'pinyin',
-                // 当前显示什么，p省c市a区s镇
+                // 当前显示什么，pcas
                 nowShow: 'p',
+                // 当前选择的省
+                p: '',
+                // 当前选择的市
+                c: '',
+                // 当前选择的县
+                a: '',
+                // 当前选择的镇
+                s: '',
                 data1: {
                     A: ["安徽省"],
                     B: ["北京市"],
@@ -108,36 +119,38 @@
             }
         },
         methods: {
+            // 点击头部的时候
+            hd_han(n) {
+                this.nowShow = n
+            },
+            // 点击省份的时候
             shengHan(p) {
                 this.p = p;
                 this.c = '';
                 this.a = '';
                 this.s = '';
+                // 改变nowShow为c
                 this.nowShow = 'c'
             },
+            // 点击市的时候
             shiHan(c) {
                 this.c = c;
                 this.a = '';
                 this.s = '';
+                // 改变nowShow为a
                 this.nowShow = 'a'
             },
+            // 点击县的时候
             xianHan(a) {
                 this.a = a;
                 this.s = '';
+                // 改变nowShow为s
                 this.nowShow = 's'
             },
+            // 点击镇的时候
             zhenHan(s) {
                 this.s = s;
             },
-            // 点击头部
-            hd_Han(n) {
-                this.nowShow = n
-            }
-        },
-        created() {
-            axios.get('http://www.aiqianduan.com:56506/pcas').then(data => {
-                this.pcasobj = data.data
-            })
         }
     }
 </script>
@@ -147,22 +160,56 @@
         width: 450px;
         height: 270px;
         padding: 5px;
-        .hd {}
-        .bd {
-            height: 220px;
-            .s_box_bd {
-                overflow-y: scroll;
-                height: 180px;
-                a {
-                    margin-left: 10px;
+        .hd {
+            overflow: hidden;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 10px;
+            span {
+                float: left;
+                padding: 0 9px;
+                border: 1px solid #eee;
+                border-right: none;
+                border-bottom: none;
+                font-size: 12px;
+                cursor: pointer;
+                &.cur {
+                    border-bottom: 2px solid red;
+                    color: red;
+                }
+                &:last-child {
+                    border-right: 1px solid #eee;
                 }
             }
         }
-    }
-    p {
-        a {
-            margin: 10px;
-            margin-left: 0;
+        .bd {
+            height: 220px;
+            padding-left: 10px;
+            .s_box_bd {
+                height: 180px;
+                overflow-y: scroll;
+                margin-top: 10px;
+            }
+            .contentrow {
+                line-height: 20px;
+                font-family: 'consolas';
+                a {
+                    padding: 0 6px;
+                }
+            }
+            p {
+                a {
+                    float: left;
+                    margin-right: 10px;
+                    font-size: 12px;
+                }
+            }
+        }
+        .spin{
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-left: -15px;
+            margin-top: -15px;
         }
     }
 </style>

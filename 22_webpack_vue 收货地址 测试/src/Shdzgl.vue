@@ -1,9 +1,9 @@
 <template>
-    <div>
+    <div class="wrap">
         <Row :gutter="16">
-            <i-col span="6" v-for="(item, index) in arr" :key="index">
+            <i-col span="6" v-for="(item,index) in arr" :key="index">
                 <Card>
-                    <b slot="title">{{item.alias}}</b>
+                    <div slot="title"><b>{{item.alias}}</b></div>
                     <div slot="extra">
                         <a href="#">删除</a>
                         <a href="#">修改</a>
@@ -15,13 +15,15 @@
                     </div>
                 </Card>
             </i-col>
-            <i-col span="6" v-if="arr.length !=4">
+            <i-col span="6">
                 <Card class="p1">
-                    <div class="jiahao" @click="isShowModal = true"></div>
+                    <div class="jiahao" @click="isShowModalInn = true"></div>
                 </Card>
             </i-col>
         </Row>
-        <Modal v-model="isShowModal" title="增加收货地址">
+
+        <!-- 模态框 -->
+        <Modal v-model="isShowModalInn" title="增加收货地址" width="600" @on-ok="isShowModalInn = false" @on-cancel="isShowModalInn = false">
             <ModalInn />
         </Modal>
     </div>
@@ -34,38 +36,39 @@
         data() {
             return {
                 arr: [],
-                // 显示模态框
-                isShowModal: true
+                isShowModalInn:true
             }
-        },
-        created() {
-            axios.get('http://www.aiqianduan.com:56506/shdz/shanshanwin').then(data => {
-                // console.log(data.data);
-                this.arr = data.data;
-            })
         },
         components: {
             ModalInn
+        },
+        created() {
+            axios.get('http://www.aiqianduan.com:56506/shdz/shanshanwin').then(data => {
+                this.arr = data.data;
+            })
         }
     }
 </script>
 
 <style lang="less" scoped>
-    .p1 {
-        height: 160px;
-        cursor: pointer;
-        .jiahao {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            margin-left: -50px;
-            margin-top: -50px;
-            background: url(/images/jiahao1.svg);
-            width: 100px;
-            height: 100px;
-            background-size: cover;
-            &:hover {
-                background: url(/images/jiahao2.svg);
+    .wrap {
+        .p1 {
+            height: 160px;
+            position: relative;
+            .jiahao {
+                position: absolute;
+                background: url(/images/jiahao1.svg);
+                width: 100px;
+                height: 100px;
+                top: 50%;
+                left: 50%;
+                margin-top: -50px;
+                margin-left: -50px;
+                cursor: pointer;
+                background-size: cover;
+                &:hover {
+                    background: url(/images/jiahao2.svg);
+                }
             }
         }
     }

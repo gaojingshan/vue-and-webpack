@@ -1,19 +1,5 @@
 <template>
     <div class="wrap">
-        <!-- <Row>
-            <i-col span="6">
-                <h1>你好</h1>
-            </i-col>
-            <i-col span="6">
-                <h1>你好</h1>
-            </i-col>
-            <i-col span="6">
-                <h1>你好</h1>
-            </i-col>
-            <i-col span="6">
-                <h1>你好</h1>
-            </i-col>
-        </Row> -->
         <Row :gutter="16">
             <i-col :span="6" v-for="(item, index) in arr" :key="index">
                 <Card>
@@ -33,10 +19,8 @@
             </i-col>
             <!-- v-if="arr.length != 4" -->
             <i-col :span="6">
-                <Card class="p1" style="position: relative">
-                    <span class="plusspan" >
-                            <div class="jiahao" @click="isShowModal = true"></div>
-                        </span>
+                <Card class="p1">
+                    <div class="jiahao" @click="isShowModal = true"></div>
                 </Card>
             </i-col>
         </Row>
@@ -117,31 +101,22 @@
 
 <style lang="less" scoped>
     .wrap {
-        // width: 1000px;
-        // margin: 40px auto;
         .p1 {
-            text-align: center;
             height: 160px;
-            font-size: 100px;
-            line-height: 160px;
-            .plusspan {
-                cursor: pointer; // 当它自己被触摸，一定要加上一个&符号，如果不加直接写:hover是不对的
+            position: relative;
+            .jiahao {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                margin-left: -50px;
+                margin-top: -50px;
+                width: 100px;
+                height: 100px;
+                background: url(/images/jiahao1.svg);
+                background-size: cover;
+                cursor: pointer;
                 &:hover {
-                    color: orange;
-                }
-                .jiahao {
-                    position: absolute;
-                    left: 50%;
-                    top: 50%;
-                    margin-left: -50px;
-                    margin-top: -50px;
-                    width: 100px;
-                    height: 100px;
-                    background: url(/images/jiahao1.svg);
-                    background-size: cover;
-                    &:hover {
-                        background: url(/images/jiahao2.svg);
-                    }
+                    background: url(/images/jiahao2.svg);
                 }
             }
         }

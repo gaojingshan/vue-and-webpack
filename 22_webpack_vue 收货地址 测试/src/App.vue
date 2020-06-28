@@ -3,9 +3,7 @@
         <Layout>
             <Header>
                 <Menu mode="horizontal" theme="dark" active-name="1">
-                    <div class="layout-logo">
-                        杉姐
-                    </div>
+                    <div class="layout-logo">杉杉</div>
                     <div class="layout-nav">
                         <MenuItem name="1">
                         <Icon type="ios-navigate"></Icon>
@@ -74,13 +72,13 @@
 <script>
     import Shdzgl from './Shdzgl.vue';
     export default {
-        components: {
+        components:{
             Shdzgl
         }
     }
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
     .layout {
         border: 1px solid #d7dde4;
         background: #f5f7f9;
@@ -92,6 +90,8 @@
         width: 100px;
         height: 30px;
         line-height: 30px;
+        font-size: 20px;
+        text-align: center;
         background: blue;
         border-radius: 3px;
         float: left;
@@ -99,17 +99,19 @@
         top: 15px;
         left: 20px;
         color: white;
-        font-size: 20px;
     }
     .layout-nav {
         width: 420px;
         margin: 0 auto;
         margin-right: 20px;
     }
-    .ivu-menu-dark {
-        background: blue;
-    }
     .ivu-layout-header {
         background: blue;
+        padding: 0 50px;
+        height: 64px;
+        line-height: 64px;
     }
+    .ivu-menu-dark {
+    background: blue;
+}
 </style>

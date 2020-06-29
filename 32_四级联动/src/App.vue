@@ -2,17 +2,17 @@
     <div>
         <div v-if=" Object.keys(pcasobj).length != 0">
             <select v-model="p">
-                    <option  v-for="(v, p) in pcasobj" :key="p">{{p}}</option>
-                </select>
+                <option  v-for="(v, p) in pcasobj" :key="p">{{p}}</option>
+            </select>
             <select v-model="c">
-                    <option v-for="(v, c) in pcasobj[p]" :key="c">{{c}}</option>
-                </select>
+                <option v-for="(v, c) in pcasobj[p]" :key="c">{{c}}</option>
+            </select>
             <select v-model="a">
-                    <option v-for="(v, a) in pcasobj[p][c]" :key="a">{{a}}</option>
-                </select>
+                <option v-for="(v, a) in pcasobj[p][c]" :key="a">{{a}}</option>
+            </select>
             <select v-model="s">
-                    <option v-for="s in pcasobj[p][c][a]" :key="s" >{{s}}</option>
-                </select>
+                <option v-for="s in pcasobj[p][c][a]" :key="s" >{{s}}</option>
+            </select>
             <h3>
                 {{p}}{{c}}{{a}}{{s}}
             </h3>
@@ -42,7 +42,7 @@
             // 当省变化了，必须让c变为省会城市。为了防止四个直辖市之间切换“市辖区”没有引发切换，所以把a也换一下。
             p(v) {
                 this.c = Object.keys(this.pcasobj[v])[0];
-                this.a=Object.keys(this.pcasobj[v][this.c])[0];
+                this.a = Object.keys(this.pcasobj[v][this.c])[0];
             },
             // 当市变化了，必须让a变化
             c(v) {

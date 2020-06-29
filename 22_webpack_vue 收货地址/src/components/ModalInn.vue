@@ -78,8 +78,8 @@
                 // 菜鸟modal
                 isShowCainiaoModal:false,
                 // 父组件接收子组件的pcas
-                p: "黑龙江省",
-                c: "哈尔滨市",
+                p: "",
+                c: "",
                 a: "",
                 s: "",
                 // 校验规则

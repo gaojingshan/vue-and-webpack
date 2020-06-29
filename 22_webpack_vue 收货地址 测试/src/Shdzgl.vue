@@ -17,15 +17,20 @@
                     </div>
                 </Card>
             </i-col>
-            <i-col span="6">
+            <!-- v-if="arr.length != 4" -->
+            <i-col span="6" >
                 <Card class="card">
-                    <div class="jiahao"></div>
+                    <div class="jiahao" @click="isShowModal = true"></div>
                 </Card>
             </i-col>
         </Row>
         <!-- 增加收货地址模态框 -->
-        <Modal v-model="isShowModal" title="增加收货地址" @on-ok="isShowModal = false" @on-cancel="isShowModal = false" width="600">
-            <ModalInn />
+        <Modal v-model="isShowModal" title="增加收货地址" width="600">
+            <ModalInn ref="modalinn" />
+            <div slot="footer">
+                <Button>取消</Button>
+                <Button type="primary" @click="okHan">确定</Button>
+            </div>
         </Modal>
     </div>
 </template>
@@ -45,8 +50,42 @@
                 this.arr = data.data;
             })
         },
-        components:{
+        components: {
             ModalInn
+        },
+        methods: {
+            // 点击确定按钮
+            okHan() {
+                this.$refs.modalinn.$refs.myform.validate(data => {
+                    if (data) {
+                        const {
+                            p,
+                            c,
+                            a,
+                            s
+                        } = this.$refs.modalinn
+                        const {
+                            d,
+                            tel,
+                            n,
+                            alias
+                        } = this.$refs.modalinn.myform
+                        // axios.post('http://www.aiqianduan.com:56506/shdz/shanshanwin', {
+                        //     p,
+                        //     c,
+                        //     a,
+                        //     s,
+                        //     d,
+                        //     n,
+                        //     tel,
+                        //     alias
+                        // }).then(data => {
+                        //     alert(data.data)
+                        // })
+                        this.isShowModal=false
+                    }
+                })
+            }
         }
     }
 </script>

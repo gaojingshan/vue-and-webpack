@@ -9,7 +9,7 @@
                         <Icon type="ios-arrow-down"></Icon>
                     </a>
                     <DropdownMenu slot="list" style="width:500px">
-                        <DropdownInn :pcasobj="pcasobj" @zhenHan="zhenHan" />
+                        <DropdownInn v-if="isShowDropdown" :pcasobj="pcasobj" :origin_p="p" :origin_c="c" :origin_a="a" :origin_s="s" @zhenHan="zhenHan" />
                         <div style="text-align: right;margin:10px;">
                             <Button type="primary" @click="isShowDropdown = false">取消</Button>
                         </div>
@@ -51,10 +51,10 @@
                 isShowDropdown: false,
                 // 拉取的省市县镇对象
                 pcasobj: {},
-                p: '',
-                c: '',
-                a: '',
-                s: '',
+                p: '湖北省',
+                c: '宜昌市',
+                a: '西陵区',
+                s: '葛洲坝街道',
                 // 菜鸟驿站是否打勾
                 isShowCainiao: false,
                 myform: {

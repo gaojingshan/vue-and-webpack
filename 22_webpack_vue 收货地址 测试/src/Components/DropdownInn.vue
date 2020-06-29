@@ -25,15 +25,15 @@
                     <Radio label="yuqu">按区域</Radio>
                 </RadioGroup>
                 <div class="sheng" v-if="currentSheng == 'pinyin'">
-                    <div v-for="(item, k) in data1" :key="k">
+                    <div v-for="(v, k) in data1" :key="k">
                         <b>{{k}}:</b>
-                        <a href="#" v-for="(item,index) in data1[k]" :key="index" @click="shengHan(item)">{{item}}</a>
+                        <a href="#" v-for="p in v" :key="p" @click="shengHan(p)">{{p}}</a>
                     </div>
                 </div>
                 <div class="sheng" v-if="currentSheng == 'yuqu'">
-                    <div v-for="(item, k) in data2" :key="k">
+                    <div v-for="(v, k) in data2" :key="k">
                         <b>{{k}}:</b>
-                        <a href="#" v-for="(item,index) in data2[k]" :key="index" @click="shengHan(item)">{{item}}</a>
+                        <a href="#" v-for="p in v" :key="p" @click="shengHan(p)">{{p}}</a>
                     </div>
                 </div>
             </div>
@@ -52,17 +52,17 @@
 
 <script>
     export default {
-        props: ['pcasobj'],
+        props: ['pcasobj', 'origin_p', 'origin_c', 'origin_a', 'origin_s'],
         data() {
             return {
                 // 当前是pinyin还是quyu
                 currentSheng: 'pinyin',
                 // 当前是在哪个地方，是pcas
-                current: 'p',
-                p: '',
-                c: '',
-                a: '',
-                s: '',
+                current: this.origin_s == '' ? 'p' : 's',
+                p: this.origin_p || '',
+                c: this.origin_c || '',
+                a: this.origin_a || '',
+                s: this.origin_s || '',
                 data1: {
                     A: ["安徽省"],
                     B: ["北京市"],

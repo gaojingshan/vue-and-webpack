@@ -165,7 +165,7 @@
 
 <style lang="less" scoped>
     .ddinn {
-        width: 450px;
+        width: 440px;
         height: 270px;
         padding: 5px;
         .hd {
@@ -191,10 +191,11 @@
             }
         }
         .bd {
-            height: 220px; // 溢出滚动
+            height: 220px;
             padding-left: 10px;
             .s_box_bd {
                 height: 180px;
+                 // 溢出滚动
                 overflow-y: scroll;
                 margin-top: 10px;
             }

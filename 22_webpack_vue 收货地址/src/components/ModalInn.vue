@@ -8,7 +8,7 @@
                         <em v-else>请选择省市县镇</em>
                         <Icon type="ios-arrow-down"></Icon>
                     </a>
-                    <DropdownMenu slot="list" style="width: 450px;height: 320px">
+                    <DropdownMenu slot="list" style="width: 440px;height: 320px">
                         <div>
                             <!-- 在把pcas传回子组件:origin_ -->
                             <DropDownInn v-if="isShowDropDown" @zhenHan="zhenHan" :origin_p="p" :origin_c="c" :origin_a="a" :origin_s="s" :pcasobj="pcasobj" />

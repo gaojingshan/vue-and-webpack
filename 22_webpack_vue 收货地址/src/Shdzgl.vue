@@ -7,8 +7,8 @@
                         <b>{{item.alias}}</b>
                     </div>
                     <div slot="extra">
-                        <a href="">删除</a>
-                        <a href="">修改</a>
+                        <a href="javascript:;">删除</a>
+                        <a href="javascript:;">修改</a>
                     </div>
                     <div>
                         <p><b>地址：</b>{{item.p}}{{item.c}}{{item.a}}{{item.s}}{{item.d}}</p>
@@ -25,7 +25,7 @@
             </i-col>
         </Row>
         <!-- 模态框 -->
-        <Modal v-model="isShowModal" :loading="true" width="600" title="增加收货地址">
+        <Modal v-model="isShowModal" :loading="true" width="700" title="增加收货地址">
             <ModalInn ref="modalinn" @updated="loading = false" />
             <div slot="footer">
                 <Button>取消</Button>

@@ -1,68 +1,69 @@
 <template>
-    <div class="wrap">
+    <div class="ddinn">
         <div class="hd">
-            <span :class="{'cur' : current == 'p'}" @click="hdHan('p')">
-                <em v-if="p == ''">请选择省份（直辖市）</em>
-                <em v-else>{{p}}</em>
+            <span :class="{'cur': current == 'p'}" @click="hd_Han('p')">
+                {{this.p == '' ? '请选择省份（直辖市）': p}}
             </span>
-            <span :class="{'cur' : current == 'c'}" @click="hdHan('c')" v-if="p != ''">
-                <em v-if="c == ''">请选择城市</em>
-                <em v-else>{{c}}</em>
+            <span :class="{'cur': current == 'c'}" v-if="p != ''" @click="hd_Han('c')">
+                {{this.c == '' ? '请选择城市': c}}
             </span>
-            <span :class="{'cur' : current == 'a'}" @click="hdHan('a')" v-if="c != ''">
-                <em v-if="a == ''">请选择县（区）</em>
-                <em v-else>{{a}}</em>
+            <span :class="{'cur': current == 'a'}" v-if="c != ''" @click="hd_Han('a')">
+                {{this.a == '' ? '请选择县（区）': a}}
             </span>
-            <span :class="{'cur' : current == 's'}" @click="hdHan('s')" v-if="a != ''">
-                <em v-if="s == ''">请选择镇（街道）</em>
-                <em v-else>{{s}}</em>
+            <span :class="{'cur': current == 's'}" v-if="a != ''" @click="hd_Han('s')">
+                {{this.s == '' ? '请选择镇（街道）': s}}
             </span>
         </div>
         <div class="bd">
-            <div v-if="current == 'p'">
-                <RadioGroup v-model="currentSheng" type="button" size="small">
+            <div class="ppp_box" v-if="current == 'p'">
+                <RadioGroup v-model="p_show" type="button" size="small">
                     <Radio label="pinyin">按拼音</Radio>
-                    <Radio label="yuqu">按区域</Radio>
+                    <Radio label="quyu">按区域</Radio>
                 </RadioGroup>
-                <div class="sheng" v-if="currentSheng == 'pinyin'">
-                    <div v-for="(v, k) in data1" :key="k">
-                        <b>{{k}}:</b>
-                        <a href="#" v-for="p in v" :key="p" @click="shengHan(p)">{{p}}</a>
+                <div class="pp_box">
+                    <div v-if="p_show == 'pinyin'">
+                        <div class="p_box" v-for="(v ,p) in data1" :key="p">
+                            <b>{{p}}:</b>
+                            <a href="javascript:;" v-for="item in v" :key="item" @click="p_han(item)">{{item}}</a>
+                        </div>
                     </div>
-                </div>
-                <div class="sheng" v-if="currentSheng == 'yuqu'">
-                    <div v-for="(v, k) in data2" :key="k">
-                        <b>{{k}}:</b>
-                        <a href="#" v-for="p in v" :key="p" @click="shengHan(p)">{{p}}</a>
+                    <div v-if="p_show == 'quyu'">
+                        <div class="p_box" v-for="(v ,p) in data2" :key="p">
+                            <b>{{p}}:</b>
+                            <a href="javascript:;" v-for="item in v" :key="item" @click="p_han(item)">{{item}}</a>
+                        </div>
                     </div>
                 </div>
             </div>
-            <p v-if="current == 'c'">
-                <a href="#" v-for="(v, c) in pcasobj[p]" :key="c" @click="shiHan(c)">{{c}}</a>
-            </p>
-            <p v-if="current == 'a'">
-                <a href="#" v-for="(v, a) in pcasobj[p][c]" :key="a" @click="xianHan(a)">{{a}}</a>
-            </p>
-            <p v-if="current == 's'">
-                <a href="#" v-for="s in pcasobj[p][c][a]" :key="s" @click="zhenHan(s)">{{s}}</a>
-            </p>
+            <div class="c_box" v-if="current == 'c'">
+                <a href="javascript:;" v-for="(v, c) in pcasobj[p]" :key="c" @click="c_han(c)">{{c}}</a>
+            </div>
+            <div class="c_box" v-if="current == 'a'">
+                <a href="javascript:;" v-for="(v, a) in pcasobj[p][c]" :key="a" @click="a_han(a)">{{a}}</a>
+            </div>
+            <div class="c_box" v-if="current == 's'">
+                <a href="javascript:;" v-for="s in pcasobj[p][c][a]" :key="s" @click="s_han(s)">{{s}}</a>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
+    import axios from 'axios';
     export default {
-        props: ['pcasobj', 'origin_p', 'origin_c', 'origin_a', 'origin_s'],
+        props:['origin_p','origin_c','origin_a','origin_s'],
         data() {
             return {
-                // 当前是pinyin还是quyu
-                currentSheng: 'pinyin',
-                // 当前是在哪个地方，是pcas
-                current: this.origin_s == '' ? 'p' : 's',
+                p_show: 'pinyin',
+                //当前展示
+                current: this.origin_s != '' ? 's' : 'p',
+                // 当前的省市县镇
                 p: this.origin_p || '',
                 c: this.origin_c || '',
                 a: this.origin_a || '',
                 s: this.origin_s || '',
+                // 拉取的数据
+                pcasobj: {},
                 data1: {
                     A: ["安徽省"],
                     B: ["北京市"],
@@ -108,93 +109,88 @@
             }
         },
         methods: {
-            // 点击导航
-            hdHan(thing) {
+            hd_Han(thing) {
                 this.current = thing;
             },
-            // 点击p
-            shengHan(p) {
+            p_han(p) {
                 this.p = p;
-                // 省后面的清空
                 this.c = '';
                 this.a = '';
                 this.s = '';
-                this.current = 'c'
+                this.current = 'c';
             },
-            // 点击c
-            shiHan(c) {
+            c_han(c) {
                 this.c = c;
-                // 市后面的清空
                 this.a = '';
                 this.s = '';
-                this.current = 'a'
+                this.current = 'a';
             },
-            // 点击a
-            xianHan(a) {
+            a_han(a) {
                 this.a = a;
-                // 县后面的清空
                 this.s = '';
-                this.current = 's'
+                this.current = 's';
             },
-            // 点击s
-            zhenHan(s) {
+            s_han(s) {
                 this.s = s;
-                this.$emit('zhenHan', {
+                this.$emit('s_han', {
                     p: this.p,
                     c: this.c,
                     a: this.a,
-                    s: this.s
-                })
-            },
+                    s: this.s,
+                });
+
+           }
+        },
+        created() {
+            axios.get('http://www.aiqianduan.com:56506/pcas').then(data => {
+                this.pcasobj = data.data;
+            })
         }
     }
 </script>
 
-<style lang="less">
-    * {
-        margin: 0;
-        padding: 0;
-    }
-    .wrap {
-        margin: 10px;
+<style lang="less" scoped>
+    .ddinn {
+        padding-left: 10px;
         .hd {
-            overflow: hidden;
-            margin-bottom: 10px;
+            height: 30px;
             span {
-                border-bottom: 1px solid #eee;
-                float: left;
                 font-size: 12px;
+                height: 30px;
+                line-height: 30px;
+                float: left;
                 border: 1px solid #eee;
-                border-right: none; // border-bottom: none;
-                padding: 0 2px;
+                padding: 0 6px;
+                border-right: none;
                 cursor: pointer;
+                &.cur {
+                    color: red;
+                    border-bottom: 2px solid red;
+                }
                 &:last-child {
                     border-right: 1px solid #eee;
                 }
-                em {
-                    float: left;
-                }
-                &.cur {
-                    border-bottom: 2px solid red;
-                    color: red;
-                }
             }
         }
-        em {
-            font-style: normal;
-        }
-        .sheng {
-            height: 200px;
-            overflow-y: scroll;
-            margin-left: 10px;
-            font-family: 'consolas';
-        }
-        .sheng a {
-            margin-right: 10px;
-        }
-        p {
-            a {
-                margin-right: 10px;
+        .bd {
+            height: 220px;
+            margin-top: 10px;
+            .pp_box {
+                height: 190px;
+                overflow-y: scroll;
+                margin-top: 10px;
+                b {
+                    font-size: 12px;
+                }
+                a {
+                    padding: 6px;
+                }
+            }
+            .c_box {
+                a {
+                    padding: 3px;
+                    float: left;
+                }
             }
         }
     }

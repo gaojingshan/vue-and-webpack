@@ -21,7 +21,7 @@
             </FormItem>
             <FormItem label="详细地址" prop="d">
                 <i-input v-model="myform.d" placeholder="街道/小区/单元门洞/门牌号"></i-input>
-                <Checkbox v-model="useCainiao" :disabled="s==''">使用菜鸟驿站代收</Checkbox>
+                <Checkbox v-model="isUseCainiao" :disabled="s==''">使用菜鸟驿站代收</Checkbox>
                 <Alert type="error" v-show="s==''">
                     请先选择省市县镇再勾选此对勾
                 </Alert>
@@ -43,9 +43,8 @@
                 </Row>
             </FormItem>
         </Form>
-
-        <Modal v-model="isShowCainiaoModal" title="请选择菜鸟驿站代收点" width='600'>
-            <CainiaoModal :p="p" :c="c" v-if="isShowCainiaoModal"/>
+        <Modal v-model="isShowCainiaoModal" title="请选择菜鸟驿站代收点" width='700' @on-ok="CainiaoModalOkHan">
+            <CainiaoModal ref="cainiaomodal" :p="p" :c="c" v-if="isShowCainiaoModal" />
         </Modal>
     </div>
 </template>
@@ -59,7 +58,6 @@
             DropDownInn,
             CainiaoModal
         },
-        
         created() {
             // 拉取pcas省市县镇数据
             axios.get("http://www.aiqianduan.com:56506/pcas").then(data => {
@@ -74,12 +72,12 @@
                 // 总数据
                 pcasobj: {},
                 // 菜鸟驿站复选框的选中与否
-                useCainiao: false,
+                isUseCainiao: false,
                 // 菜鸟modal
-                isShowCainiaoModal:false,
+                isShowCainiaoModal: true,
                 // 父组件接收子组件的pcas
-                p: "",
-                c: "",
+                p: "北京市",
+                c: "市辖区",
                 a: "",
                 s: "",
                 // 校验规则
@@ -167,14 +165,22 @@
             aliasBtnHan(thing) {
                 // 双向绑定了已经
                 this.$set(this.myform, "alias", thing);
+            },
+            // 选择菜鸟驿站的modal框的确定
+            CainiaoModalOkHan() {
+                // 检查是否已经选择了菜鸟驿站
+                console.log('选择了');
+                if(this.$refs.cainiaomodal.nowitem == null){
+
+                }
             }
         },
         // 监控。vue有双向绑定，所以就必须有watch，得到改变那一瞬间的事件
-        watch:{
-            useCainiao(v){
-                if(v){
+        watch: {
+            isUseCainiao(v) {
+                if (v) {
                     // 如果用户勾选了使用菜鸟驿站服务，那么就弹出一个新的弹出层
-                    this.isShowCainiaoModal=true
+                    this.isShowCainiaoModal = true
                 }
             }
         },

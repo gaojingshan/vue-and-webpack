@@ -74,7 +74,7 @@
 <script>
     import Shdzgl from './Shdzgl.vue';
     export default {
-        components:{
+        components: {
             Shdzgl
         }
     }
@@ -91,9 +91,6 @@
     .layout-logo {
         width: 100px;
         height: 30px;
-        line-height: 30px;
-        font-size: 20px;
-        text-align: center;
         background: blue;
         border-radius: 3px;
         float: left;
@@ -101,13 +98,18 @@
         top: 15px;
         left: 20px;
         color: white;
+        line-height: 30px;
+        font-size: 24px;
+        text-align: center;
     }
     .layout-nav {
         width: 420px;
         margin: 0 auto;
         margin-right: 20px;
     }
-    .ivu-menu-dark,
+    .ivu-menu-dark {
+        background: blue;
+    }
     .ivu-layout-header {
         background: blue;
     }

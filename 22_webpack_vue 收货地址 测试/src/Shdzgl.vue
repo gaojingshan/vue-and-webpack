@@ -11,26 +11,21 @@
                         <a href="#">修改</a>
                     </div>
                     <div>
-                        <p><b>地址:</b>{{item.p}}{{item.c}}{{item.a}}{{item.s}}{{item.d}}</p>
-                        <p><b>收件人:</b>{{item.n}}</p>
-                        <p><b>手机号:</b>{{item.tel}}</p>
+                        <p><b>地址：</b>{{item.p}}{{item.c}}{{item.a}}{{item.s}}{{item.d}}</p>
+                        <p><b>收件人：</b>{{item.n}}</p>
+                        <p><b>手机号：</b>{{item.tel}}</p>
                     </div>
                 </Card>
             </i-col>
-            <!-- v-if="arr.length != 4" -->
-            <i-col span="6" >
-                <Card class="card">
-                    <div class="jiahao" @click="isShowModal = true"></div>
+            <i-col span="6" v-if="arr.length != 4">
+                <Card class="jia_box">
+                    <div class="jiahao"></div>
                 </Card>
             </i-col>
         </Row>
-        <!-- 增加收货地址模态框 -->
+        <!-- 模态框 -->
         <Modal v-model="isShowModal" title="增加收货地址" width="600">
-            <ModalInn ref="modalinn" />
-            <div slot="footer">
-                <Button>取消</Button>
-                <Button type="primary" @click="okHan">确定</Button>
-            </div>
+            <ModalInn />
         </Modal>
     </div>
 </template>
@@ -41,73 +36,42 @@
     export default {
         data() {
             return {
+                // 读取收货地址信息
                 arr: [],
-                isShowModal: true
+                // 是否显示模态框
+                isShowModal: true,
             }
-        },
-        created() {
-            axios.get('http://www.aiqianduan.com:56506/shdz/shanshanwin').then(data => {
-                this.arr = data.data;
-            })
         },
         components: {
             ModalInn
         },
-        methods: {
-            // 点击确定按钮
-            okHan() {
-                this.$refs.modalinn.$refs.myform.validate(data => {
-                    if (data) {
-                        const {
-                            p,
-                            c,
-                            a,
-                            s
-                        } = this.$refs.modalinn
-                        const {
-                            d,
-                            tel,
-                            n,
-                            alias
-                        } = this.$refs.modalinn.myform
-                        // axios.post('http://www.aiqianduan.com:56506/shdz/shanshanwin', {
-                        //     p,
-                        //     c,
-                        //     a,
-                        //     s,
-                        //     d,
-                        //     n,
-                        //     tel,
-                        //     alias
-                        // }).then(data => {
-                        //     alert(data.data)
-                        // })
-                        this.isShowModal=false
-                    }
-                })
-            }
+        created() {
+            axios.get('http://www.aiqianduan.com:56506/shdz/shanshanwin1').then(data => {
+                this.arr = data.data
+            })
         }
-    }
+    };
 </script>
 
-<style lang="less">
-    .card {
-        height: 160px;
+<style lang="less" scoped>
+    .jia_box {
         position: relative;
+        height: 160px;
         .jiahao {
-            background: url(/images/jiahao1.svg);
-            background-size: cover;
-            width: 100px;
-            height: 100px;
             position: absolute;
             top: 50%;
             left: 50%;
-            margin-left: -50px;
+            background-image: url(/images/jiahao1.svg);
+            width: 100px;
+            height: 100px;
             margin-top: -50px;
+            margin-left: -50px;
+            background-size: cover;
             cursor: pointer;
             &:hover {
-                background: url(/images/jiahao2.svg);
+                background-image: url(/images/jiahao2.svg);
             }
         }
     }
+    
 </style>

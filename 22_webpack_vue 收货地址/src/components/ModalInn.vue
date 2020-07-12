@@ -43,7 +43,11 @@
                 </Row>
             </FormItem>
         </Form>
-        <Modal v-model="isShowCainiaoModal" title="请选择菜鸟驿站代收点" width='700' @on-ok="CainiaoModalOkHan">
+        <Modal :value="isShowCainiaoModal" title="请选择菜鸟驿站代收点" width='700'>
+            <div slot="footer">
+                <Button>取消</Button>
+                <Button type="primary" @click="CainiaoModalOkHan">确定</Button>
+            </div>
             <CainiaoModal ref="cainiaomodal" :p="p" :c="c" v-if="isShowCainiaoModal" />
         </Modal>
     </div>
@@ -169,9 +173,20 @@
             // 选择菜鸟驿站的modal框的确定
             CainiaoModalOkHan() {
                 // 检查是否已经选择了菜鸟驿站
-                console.log('选择了');
-                if(this.$refs.cainiaomodal.nowitem == null){
-
+                // 如果用户没有选择任何的菜鸟驿站
+                if (this.$refs.cainiaomodal.nowitem == null) {
+                    // 弹出判断对话框
+                    var confirmModal = confirm('你没有选择任何的菜鸟驿站，真的要关闭么？');
+                    if (confirmModal) {
+                        this.isShowCainiaoModal = false;
+                    }
+                } else {
+                    // 当用户选择好了菜鸟驿站的时候
+                    // 把数据拉出来
+                    var d = `[菜鸟驿站]${this.$refs.cainiaomodal.nowitem.address}`;
+                    this.myform.d = d;
+                    // 关闭模态框
+                    this.isShowCainiaoModal = false;
                 }
             }
         },

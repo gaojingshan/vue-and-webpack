@@ -1,6 +1,6 @@
-import carData from './carData.js';
+import carStore from './carStore.js';
 export default {
   modules: {
-    carData,
+    carStore
   },
 };

@@ -2,21 +2,19 @@ import axios from 'axios';
 export default {
   namespaced: true,
   state: {
-    // 总数据
     cardata: [],
-    // 总条数
     total: 0,
-    // 页码
     page: 1,
-    // 选中的颜色
-    color: ['红', '蓝'],
+    color: ['黄', '红'],
     brand: '',
   },
   mutations: {
-    cardata(state, payloads) {
+    // 改变数据
+    changeCardata(state, payloads) {
       state.cardata = payloads.cardata;
     },
-    total(state, payloads) {
+    // 条数
+    changeTotal(state, payloads) {
       state.total = payloads.total;
     },
     // 改变页码
@@ -43,23 +41,25 @@ export default {
             state.color.join('v')+'&brand='+state.brand
         )
         .then((data) => {
-          commit('cardata', {cardata: data.data.results});
-          commit('total', {total: data.data.total});
+          commit('changeCardata', {cardata: data.data.results});
+          commit('changeTotal', {total: data.data.total});
         });
     },
+    // 改变页码
     changePage({commit, dispatch}, payloads) {
       commit('changePage', payloads);
       dispatch('loadData');
     },
+    // 改变颜色
     changeColor({commit, dispatch}, payloads) {
-      commit('changePage', {page: 1});
       commit('changeColor', payloads);
+      commit('changePage', {page: 1});
       dispatch('loadData');
     },
     changeBrand({commit, dispatch}, payloads) {
-      commit('changePage', {page: 1});
       commit('changeBrand', payloads);
-      dispatch('loadData')
+      commit('changePage', {page: 1});
+      dispatch('loadData');
     },
   },
 };

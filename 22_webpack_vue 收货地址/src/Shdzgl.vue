@@ -17,19 +17,18 @@
                     </div>
                 </Card>
             </i-col>
-            <!-- v-if="arr.length != 4" -->
-            <i-col :span="6">
+            <i-col :span="6" v-if="arr.length != 4">
                 <Card class="p1">
                     <div class="jiahao" @click="isShowModal = true"></div>
                 </Card>
             </i-col>
         </Row>
         <!-- 模态框 -->
-        <Modal v-model="isShowModal" :loading="true" width="700" title="增加收货地址">
+        <Modal v-model="isShowModal" :loading="true" width="700" title="增加收货地址" @on-cancel="isShowModal = false">
             <ModalInn ref="modalinn" @updated="loading = false" />
             <div slot="footer">
-                <Button>取消</Button>
-                <Button type="primary" @click="okHan">确定</Button>
+                <Button @click="modalCancelHan">取消</Button>
+                <Button type="primary" @click="modalOkHan">确定</Button>
             </div>
         </Modal>
     </div>
@@ -43,7 +42,7 @@
             return {
                 arr: [],
                 // 是否显示弹出层
-                isShowModal: true,
+                isShowModal: false,
             }
         },
         components: {
@@ -51,14 +50,19 @@
         },
         // 生命周期
         created() {
-            // 请求服务器数据
-            axios.get('http://www.aiqianduan.com:56506/shdz/shanshan').then(data => {
-                this.arr = data.data
-            })
+            // 请求数据
+            this.loadData();
         },
         methods: {
+            loadData() {
+                this.arr = [];
+                // 请求服务器数据
+                axios.get('http://www.aiqianduan.com:56506/shdz/shanshan').then(data => {
+                    this.arr = data.data
+                })
+            },
             // 当点击模态框的确定按钮做的事情
-            okHan() {
+            modalOkHan() {
                 // 检验整个表格  validate 验证的意思
                 // 这里回调的data值，就是表单是否无错，true表示无错，false表示有错
                 this.$refs.modalinn.$refs.myform.validate((data) => {
@@ -76,7 +80,8 @@
                             a,
                             s
                         } = this.$refs.modalinn;
-                        this.isShowModal = false;
+                        // 显示顶部加载进度条
+                        this.$Loading.start();
                         // 添加数据
                         axios.post('http://www.aiqianduan.com:56506/shdz/shanshan', {
                             // k-v一致，省略v
@@ -89,11 +94,21 @@
                             alias,
                             tel
                         }).then(data => {
-                            alert(data.data)
+                            console.log(data.data);
+                            this.isShowModal = false;
+                            if (data.data == '添加成功') {
+                                this.$Message.success('成功添加了一个地址');
+                                // 更新页面
+                                this.loadData();
+                            } else {
+                                this.$Message.error('没有成功添加地址，请联系管理员');
+                            }
                         })
                     }
                 });
-            }
+            },
+            // 点击取消
+            modalCancelHan() {}
         }
     }
 </script>

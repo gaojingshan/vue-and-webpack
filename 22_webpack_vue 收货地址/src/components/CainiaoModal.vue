@@ -49,7 +49,7 @@
                     axios
                         .get("http://www.aiqianduan.com:56506/zhaohang?city=" + city)
                         .then(data => {
-                            console.log(data.data);
+                            // console.log(data.data);
                             this.dataArr = data.data;
                             // 新建一个地图
                             this.map = new AMap.Map('map-container', {

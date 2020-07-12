@@ -20,11 +20,16 @@
                 </Dropdown>
             </FormItem>
             <FormItem label="详细地址" prop="d">
-                <i-input v-model="myform.d" placeholder="街道/小区/单元门洞/门牌号"></i-input>
-                <Checkbox v-model="isUseCainiao" :disabled="s==''">使用菜鸟驿站代收</Checkbox>
-                <Alert type="error" v-show="s==''">
-                    请先选择省市县镇再勾选此对勾
-                </Alert>
+                <i-input v-model="myform.d" placeholder="街道/小区/单元门洞/门牌号" :disabled="isUseCainiao"></i-input>
+                <Row>
+                    <i-col :span="7">
+                        <Checkbox v-model="isUseCainiao" :disabled="s==''">使用菜鸟驿站代收</Checkbox>
+                    </i-col>
+                    <i-col :span="12">
+                        <a href="#" @click="rechooseCainiao" v-show="isUseCainiao && myform.d != ''">重新选择菜鸟驿站</a>
+                        <div style="color:red" type="error" v-show="s==''">请先选择省市县镇再勾选此对勾</div>
+                    </i-col>
+                </Row>
             </FormItem>
             <FormItem label="手机号" prop="tel">
                 <i-input v-model="myform.tel" placeholder="请输入合法的手机号码"></i-input>
@@ -38,14 +43,14 @@
                         <i-input v-model="myform.alias"></i-input>
                     </i-col>
                     <i-col :span="18">
-                        <Button class="btn" v-for="(item, index) in ['家','公司','学校']" :key="index" @click="aliasBtnHan(item)">{{item}}</Button>
+                        <Button class="btn" v-for="(item, index) in ['家','公司','学校','菜鸟驿站']" :key="index" @click="aliasBtnHan(item)">{{item}}</Button>
                     </i-col>
                 </Row>
             </FormItem>
         </Form>
-        <Modal :value="isShowCainiaoModal" title="请选择菜鸟驿站代收点" width='700'>
+        <Modal :value="isShowCainiaoModal" title="请选择菜鸟驿站代收点" width="700" @on-cancel="closeCainiaoModalHan">
             <div slot="footer">
-                <Button>取消</Button>
+                <Button @click="closeCainiaoModalHan">取消</Button>
                 <Button type="primary" @click="CainiaoModalOkHan">确定</Button>
             </div>
             <CainiaoModal ref="cainiaomodal" :p="p" :c="c" v-if="isShowCainiaoModal" />
@@ -56,7 +61,7 @@
 <script>
     import axios from "axios";
     import DropDownInn from "./DropDownInn.vue";
-    import CainiaoModal from './CainiaoModal.vue';
+    import CainiaoModal from "./CainiaoModal.vue";
     export default {
         components: {
             DropDownInn,
@@ -77,11 +82,11 @@
                 pcasobj: {},
                 // 菜鸟驿站复选框的选中与否
                 isUseCainiao: false,
-                // 菜鸟modal
-                isShowCainiaoModal: true,
+                // 是否显示菜鸟驿站的对话框
+                isShowCainiaoModal: false,
                 // 父组件接收子组件的pcas
-                p: "北京市",
-                c: "市辖区",
+                p: "",
+                c: "",
                 a: "",
                 s: "",
                 // 校验规则
@@ -142,7 +147,7 @@
                         }
                     ]
                 },
-                // 表单的双向绑定
+                // 表单的双向绑定，用户填写表单的数据
                 myform: {
                     tel: "",
                     d: "",
@@ -176,7 +181,7 @@
                 // 如果用户没有选择任何的菜鸟驿站
                 if (this.$refs.cainiaomodal.nowitem == null) {
                     // 弹出判断对话框
-                    var confirmModal = confirm('你没有选择任何的菜鸟驿站，真的要关闭么？');
+                    var confirmModal = confirm("你没有选择任何的菜鸟驿站，真的要关闭么？");
                     if (confirmModal) {
                         this.isShowCainiaoModal = false;
                     }
@@ -188,17 +193,32 @@
                     // 关闭模态框
                     this.isShowCainiaoModal = false;
                 }
+            },
+            // 当点击了取消、叉号、黑色屏幕从而取消对话框的时候
+            closeCainiaoModalHan() {
+                // 关闭模态框
+                this.isShowCainiaoModal = false;
+                // 菜鸟驿站复选框取消选中
+                this.isUseCainiao = false;
+            },
+            // 重新选择菜鸟驿站
+            rechooseCainiao() {
+                this.isShowCainiaoModal = true;
+                this.myform.d = '';
             }
         },
         // 监控。vue有双向绑定，所以就必须有watch，得到改变那一瞬间的事件
         watch: {
             isUseCainiao(v) {
+                // 如果用户打勾了
                 if (v) {
                     // 如果用户勾选了使用菜鸟驿站服务，那么就弹出一个新的弹出层
-                    this.isShowCainiaoModal = true
+                    this.isShowCainiaoModal = true;
+                } else {
+                    this.myform.d = '';
                 }
             }
-        },
+        }
     };
 </script>
 

@@ -9,7 +9,9 @@ export default {
     // 汽车数据
     cardata: [],
     // 当前颜色筛选
-    color:['红','蓝']
+    color: ['红', '蓝'],
+    // 汽车品牌
+    brand: '奥迪',
   },
   // [同步的，被commit刺激的，唯一能够改变state的地方]
   mutations: {
@@ -26,16 +28,28 @@ export default {
       state.page = payloads.page;
     },
     // 更改颜色
-    changeColor(state,payloads){
-        state.color=payloads.color
-    }
+    changeColor(state, payloads) {
+      state.color = payloads.color;
+    },
+    //更改品牌
+    changeBrand(state, payloads) {
+      state.brand = payloads.brand;
+    },
   },
   // [异步的，被dispatch刺激的]
   actions: {
     // 拉取数据
     loadData({state, commit}) {
       axios
-        .get('http://www.aiqianduan.com:56506/cars?page=' + state.page + '&color=' + state.color.join('v')).then((data) => {
+        .get(
+          'http://www.aiqianduan.com:56506/cars?page=' +
+            state.page +
+            '&color=' +
+            state.color.join('v') +
+            '&brand=' +
+            state.brand
+        )
+        .then((data) => {
           // 上跳
           commit('changeCardata', {cardata: data.data.results});
           commit('changeTotal', {total: data.data.total});
@@ -49,11 +63,19 @@ export default {
       dispatch('loadData');
     },
     // 改变颜色
-    changeColor({commit,dispatch},payloads){
-        // 改变颜色，页码要归1
-        commit('changePage',{page:1});
-        commit('changeColor',payloads);
-        dispatch('loadData')
-    }
+    changeColor({commit, dispatch}, payloads) {
+      // 改变颜色，页码要归1
+      commit('changePage', {page: 1});
+      commit('changeColor', payloads);
+      dispatch('loadData');
+    },
+    // 改变品牌
+    changeBrand({commit, dispatch}, payloads) {
+      console.log(payloads);
+
+      commit('changePage', {page: 1});
+      commit('changeBrand', payloads);
+      dispatch('loadData');
+    },
   },
 };

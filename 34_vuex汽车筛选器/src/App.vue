@@ -4,11 +4,13 @@
       <!-- 复选框不能使用v-model双向绑定了 -->
       <!-- 因为双向绑定，就相当于直接更改全局数据了，就不能dispatch了。 -->
       <!-- 这里的$event表示用户勾选之后的数组 -->
-      <CheckboxGroup :value="carStore.color" @on-change="$store.dispatch('carStore/changeColor',{color: $event})">
-        <Checkbox v-for="item in ['红','黄','蓝','黑','白']" :key="item" :label="item">
-          
-        </Checkbox>
+      <CheckboxGroup :value="carStore.color" @on-change="$store.dispatch('carStore/changeColor', {color: $event})">
+        <Checkbox v-for="item in ['红','黄','蓝','黑','白']" :key="item" :label="item"></Checkbox>
       </CheckboxGroup>
+      <!-- 汽车品牌 -->
+      <RadioGroup :value="carStore.brand" @on-change="$store.dispatch('carStore/changeBrand', {brand: $event})">
+        <Radio v-for="item in ['奥迪','本田','奔驰','宝马','大众','丰田']" :key="item"  :label="item" >{{item}}</Radio>
+      </RadioGroup>
     </div>
     <!-- 表格的数据是在全局的，但是列定义是在组件中的 -->
     <!-- 为什么数据在全局，但是列定义在组件中？ -->
@@ -34,17 +36,17 @@
             key: "id"
           },
           {
-            title: '图片',
-            key: 'img',
+            title: "图片",
+            key: "img",
             width: 160,
             render: (h, {
               row
             }) => {
-              return h('img', {
+              return h("img", {
                 attrs: {
                   src: `http://aiqianduan.com:56506/images/carimages_small/${row.id}/view/${row.img}`
                 }
-              })
+              });
             }
           },
           {

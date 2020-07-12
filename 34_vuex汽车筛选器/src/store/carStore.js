@@ -9,7 +9,7 @@ export default {
     // 汽车数据
     cardata: [],
     // 当前颜色筛选
-    color: ['红', '蓝'],
+    color: [],
     // 汽车品牌
     brand: '奥迪',
   },

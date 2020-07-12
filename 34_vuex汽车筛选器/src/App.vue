@@ -9,7 +9,7 @@
       </CheckboxGroup>
       <!-- 汽车品牌 -->
       <RadioGroup :value="carStore.brand" @on-change="$store.dispatch('carStore/changeBrand', {brand: $event})">
-        <Radio v-for="item in ['奥迪','本田','奔驰','宝马','大众','丰田']" :key="item"  :label="item" >{{item}}</Radio>
+        <Radio v-for="item in ['奥迪','本田','奔驰','宝马','大众','丰田']" :key="item"  :label="item" ></Radio>
       </RadioGroup>
     </div>
     <!-- 表格的数据是在全局的，但是列定义是在组件中的 -->

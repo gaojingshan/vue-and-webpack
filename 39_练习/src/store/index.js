@@ -1,6 +1,6 @@
-import counterStore from './counterStore.js';
-export default{
-    modules:{
-        counterStore
-    }
-}
+import carData from './carData.js';
+export default {
+  modules: {
+    carData,
+  },
+};

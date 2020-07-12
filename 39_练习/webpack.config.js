@@ -17,7 +17,7 @@ module.exports = {
     // 配置一下webpack-dev-server的一些属性
     devServer: {
         // 端口号
-        port: 8000,
+        port: 8001,
         // 静态文件的目录，www文件夹中是静态资源文件
         contentBase: './www'
     },

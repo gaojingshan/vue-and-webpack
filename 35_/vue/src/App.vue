@@ -2,7 +2,7 @@
   <div>
     <div class="box">
       <p>要把这个行政通知发给谁？请您选择</p>
-      <Tree :data="treeData" :load-data="loadData" show-checkbox></Tree>
+      <Tree :data="treeData" :load-data="loadData" show-checkbox @on-check-change="changeCheckHan"></Tree>
     </div>
   </div>
 </template>
@@ -42,7 +42,9 @@
                 // 编号
                 bid: item.bid,
                 // 加一个层次，标识我们当前是第几个层次
-                floor: 2
+                floor: 2,
+                // 所属的区
+                
               }))
             );
           });
@@ -59,6 +61,11 @@
             );
           });
         }
+      },
+      // 获取节点元素
+      changeCheckHan(nowchecked){
+        console.log(nowchecked);
+        
       }
     }
   };

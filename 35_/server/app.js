@@ -125,7 +125,7 @@ app.get('/info', (req, res) => {
     res.json({
       arr: [
         {
-          rid: '18011',
+          =“id: '18011',
           rname: '小刘',
         },
         {

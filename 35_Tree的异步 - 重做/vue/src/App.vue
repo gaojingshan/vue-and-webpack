@@ -3,7 +3,7 @@
     <p>要把这个行政通知发给谁？请您选择</p>
     <div>
       当前：
-      <Tag v-for="(item, index) in nowcheckComputed" :key="index">{{item.title}}</Tag>
+      <Tag  closable v-for="(item, index) in nowcheckComputed" :key="index" @on-close="handleClose">{{item}}</Tag>
     </div>
     <Tree :data="treeData" :load-data="loadData" show-checkbox @on-check-change="checkChangeHan"></Tree>
   </div>
@@ -15,7 +15,7 @@
     data() {
       return {
         treeData: [],
-        nowcheck: []
+        nowcheck: [],
       };
     },
     created() {
@@ -54,8 +54,6 @@
             callback(
               data.data.arr.map(_item => ({
                 title: _item.rname,
-                loading: false,
-                children: [],
                 // id
                 rid: _item.rid,
                 floor: 3,
@@ -71,6 +69,12 @@
       },
       checkChangeHan(nowcheckArr) {
         this.nowcheck = nowcheckArr;
+      },
+      handleClose(event, name) {
+        console.log(event);
+        console.log(name);
+        console.log(event);
+        
       }
     },
     computed: {
@@ -94,9 +98,9 @@
         }
         return this.nowcheck.map(item => {
           if (item.floor == 1) {
-            return item.title;
+            return item.title + "全体成员";
           } else if (item.floor == 2) {
-            return item.belongQname + item.title;
+            return item.belongQname + item.title + "全体成员";
           } else if (item.floor == 3) {
             return item.title + "(" + item.belongQname + item.belongBname + ")";
           }

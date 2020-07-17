@@ -22,10 +22,12 @@ module.exports = {
     contentBase: './www',
     // 代理跨域
     proxy: {
-        // 让3000端口偷到8080的API路径中
+      // 让3000端口偷到8080的 API 路径中
+      // http://127.0.0.1:3000/a  -->  http://localhost:8080/api/a
+      // http://127.0.0.1:3000/b  -->  http://localhost:8080/api/b
       '/api': {
         target: 'http://localhost:3000',
-        pathRewrite: {'^/api': ''},
+        pathRewrite: { '^/api': '' },
       },
     },
   },

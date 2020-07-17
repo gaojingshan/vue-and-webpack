@@ -3,6 +3,7 @@ const url = require('url');
 
 const app = express();
 // app.get('/a', (req, res) => {
+//     // CORS
 //     // 允许跨域
 //     // res.setHeader('Access-Control-Allow-Origin', '*');
 //     // res.setHeader('Access-Control-Allow-Methods', '*');
@@ -15,6 +16,7 @@ app.get('/info', (req, res) => {
   // 得到用户发来的GET请求参数
   var m = url.parse(req.url, true).query.m;
 
+  // CORS
   // 允许跨域
   // res.setHeader('Access-Control-Allow-Origin', '*');
   // res.setHeader('Access-Control-Allow-Methods', '*');
@@ -125,7 +127,7 @@ app.get('/info', (req, res) => {
     res.json({
       arr: [
         {
-          =“id: '18011',
+          rid: '18011',
           rname: '小刘',
         },
         {

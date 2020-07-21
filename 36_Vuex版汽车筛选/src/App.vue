@@ -2,14 +2,14 @@
   <div class="wrap">
     品牌：
     <Tabs value="A">
-      <TabPane v-for="(v,zimu) in allbs" :key="zimu" :label="zimu" :name="zimu">
-        <Checkbox v-for="(vv,brand) in v" :key="brand" :label="brand" :value="nowChoose.includes(brand)" @on-change="checkboxChangeHan(brand)" :disabled="nowChoose.length >= 4 && !nowChoose.includes(brand)">
+      <TabPane v-for="(v, zimu) in allbs" :key="zimu" :label="zimu" :name="zimu">
+        <Checkbox v-for="(vv, brand) in v" :key="brand" :label="brand" :value="nowChoose.includes(brand)" @on-change="checkboxChangeHan(brand)" :disabled="nowChoose.length >= 4 && !nowChoose.includes(brand)">
           {{brand}}
         </Checkbox>
       </TabPane>
     </Tabs>
     <div class="choosedBox" v-if="nowChoose.length !=0">
-      已选品牌：<Checkbox v-for="item in nowChoose" :key="item" :label="item" :value="true" @on-change="changeChoosedBox(item)">
+      已选品牌：<Checkbox v-for="item in nowChoose" :key="item" :label="item" :value="true" @on-change="checkboxChangeHan(item)">
         {{item}}
       </Checkbox>
       <span v-if="nowChoose.length >= 4">（最多可选4个）</span>
@@ -44,11 +44,6 @@
           // 增加
           this.nowChoose.push(brand)
         }
-      },
-      // 点击已选择的复选框
-      changeChoosedBox(brand) {
-        // 肯定是删除
-        this.nowChoose = this.nowChoose.filter(item => item != brand)
       }
     }
   }

@@ -4,19 +4,16 @@ export default {
   state: {
     allbs: [],
   },
-  // 同步的，被commit刺激的，唯一能够改变state的地方
   mutations: {
-    changeAllbs(state, payloads) {
+    loadData(state, payloads) {
       state.allbs = payloads.allbs;
     },
   },
-  // 异步的，被dispatch刺激的
   actions: {
-    loadAllbs({commit}) {
+    loadData({commit}) {
       axios.get('http://www.aiqianduan.com:56506/allbs').then((data) => {
-        commit('changeAllbs', {allbs: data.data});
+        commit('loadData', {allbs: data.data});
       });
     },
-    
   },
 };

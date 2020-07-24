@@ -105,7 +105,7 @@
         ruleValidate: {
           name: [{
             required: true,
-            message: 'The name cannot be empty',
+            message: '',
             trigger: 'blur'
           }],
         }

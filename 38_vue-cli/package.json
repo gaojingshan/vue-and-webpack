@@ -1,5 +1,5 @@
 {
-  "name": "40_vue-cli",
+  "name": "38_vue-cli",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
+    "view-design": "^4.3.2",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
     "vuex": "^3.4.0"

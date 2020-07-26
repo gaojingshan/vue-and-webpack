@@ -12,6 +12,7 @@ const routes = [
   {
     path: '/app',
     component: HeaderLayout,
+    redirect: '/app/index',
     children: [
       {
         path: 'index',

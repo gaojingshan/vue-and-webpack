@@ -1,22 +1,46 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Home from '../views/Home.vue';
+
+import HeaderLayout from '../layouts/HeaderLayout.vue';
+import LeftLayout from '../layouts/LeftLayout.vue';
+import Index from '../views/index/Index.vue';
+import AllOrder from '../views/order/AllOrder.vue';
+import NewOrder from '../views/order/NewOrder.vue';
 
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/',
-    name: 'Home',
-    component: Home,
+    path: '/app',
+    component: HeaderLayout,
+    redirect: '/app/index',
+    children: [
+      {
+        path: 'index',
+        component: Index,
+        name: 'index',
+      },
+      {
+        path: 'order',
+        component: LeftLayout,
+        redirect: '/app/order/allorder',
+        name: 'order',
+        children: [
+          {
+            path: 'allorder',
+            component: AllOrder,
+          },
+          {
+            path: 'neworder',
+            component: NewOrder,
+          },
+        ],
+      },
+    ],
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+    path: '*',
+    redirect: '/app/index',
   },
 ];
 

@@ -11,6 +11,9 @@
                         <MenuItem name="order">
                           订单
                         </MenuItem>
+                        <MenuItem name="finance">
+                          财务
+                        </MenuItem>
                     </div>
                 </Menu>
             </Header>

@@ -5,6 +5,7 @@ import LeftLayout from '../layouts/LeftLayout.vue';
 import Index from '../views/index/Index.vue';
 import AllOrder from '../views/order/AllOrder.vue';
 import NewOrder from '../views/order/NewOrder.vue';
+import FinanceOverview from '../views/finance/FinanceOverview.vue';
 
 Vue.use(VueRouter);
 
@@ -33,6 +34,18 @@ const routes = [
           {
             path: 'neworder',
             component: NewOrder,
+          },
+        ],
+      },
+      {
+        path: 'finance',
+        component: LeftLayout,
+        name: 'finance',
+        redirect: '/app/finance/finance-overview',
+        children: [
+          {
+            path: 'finance-overview',
+            component: FinanceOverview,
           },
         ],
       },

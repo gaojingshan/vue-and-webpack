@@ -1,22 +1,46 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Home from '../views/Home.vue';
+import HeaderLayout from '../layouts/HeaderLayout.vue';
+import LeftLayout from '../layouts/LeftLayout.vue';
+import Index from '../views/index/Index.vue';
+import AllOrder from '../views/order/AllOrder.vue';
+import NewOrder from '../views/order/NewOrder.vue';
 
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/',
-    name: 'Home',
-    component: Home,
+    path: '/app',
+    component: HeaderLayout,
+    children: [
+      {
+        path: 'index',
+        component: Index,
+        name: 'index',
+      },
+      {
+        path: 'order',
+        component: LeftLayout,
+        name: 'order',
+        // 跳转到order栏目中的默认页（全部订单这个页面）
+        redirect: '/app/order/allorder',
+        children: [
+          {
+            path: 'allorder',
+            component: AllOrder,
+          },
+          {
+            path: 'neworder',
+            component: NewOrder,
+          },
+        ],
+      },
+    ],
   },
+  // 这个*就表示如果用户输入了其它路由，那么就要跳转到首页
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+    path: '*',
+    redirect: '/app/index',
   },
 ];
 

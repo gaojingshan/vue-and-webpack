@@ -1,9 +1,19 @@
 <template>
-  <div id="app">
-    <router-view/>
+  <div>
+    <h1>{{a}}</h1>
   </div>
 </template>
 
-<style lang="less">
+<script>
+export default {
+  data() {
+    return {
+      a: 10,
+    };
+  },
+};
+</script>
+
+<style lang="less" scoped>
 
 </style>

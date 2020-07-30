@@ -64,16 +64,16 @@ const router = new VueRouter({
 
 // 前置守卫
 // 会回调到哪儿去，从哪儿来，是否放行
-router.beforeEach((to, from, next) => {
-  // 通过这个校验权限
-  console.log(to, from);
-  // 职责链
-  next();
-});
+// router.beforeEach((to, from, next) => {
+//   // 通过这个校验权限
+//   console.log(to, from);
+//   // 职责链
+//   next();
+// });
 
-// 后置守卫
-router.afterEach((to, from) => {
-  console.log(to, from);
-});
+// // 后置守卫
+// router.afterEach((to, from) => {
+//   console.log(to, from);
+// });
 
 export default router;

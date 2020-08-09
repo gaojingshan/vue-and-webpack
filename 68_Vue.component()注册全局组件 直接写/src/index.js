@@ -2,7 +2,7 @@
 import Vue from '../node_modules/vue/dist/vue.js';
 import App from './App.vue';
 
-// 注册全局组件，这样添加就无人不识君了。
+// 注册全局组件，这样天下无人不识君了。
 // 全局组件component准备开始
 // Vue.component后面可以写任何vue组件类的实例的写法
 Vue.component('Haha', {

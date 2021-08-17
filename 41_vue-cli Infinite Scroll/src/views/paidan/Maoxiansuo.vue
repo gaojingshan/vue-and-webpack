@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>我是毛线索</h1>
+        <h1>我是线索</h1>
     </div>
 </template>
 

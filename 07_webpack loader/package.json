@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "css-loader": "^3.5.3",
+    "css-loader": "^6.7.3",
     "less": "^3.11.1",
     "less-loader": "^6.1.0",
     "style-loader": "^1.2.1"
